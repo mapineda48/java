@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ortopedic.entity.Client;
+import ortopedic.entity.Ortopedic;
 import ortopedic.entity.Reservation;
 import ortopedic.repository.ReservationRepository;
 
@@ -15,6 +17,12 @@ public class ReservationService {
 
     @Autowired
     private ReservationRepository reservationRepository;
+
+    @Autowired
+    private ClientService clientService;
+
+    @Autowired
+    private OrtopedicService ortopedicService;
 
     public List<Reservation> getAll() {
         return reservationRepository.getAll();
@@ -26,13 +34,41 @@ public class ReservationService {
 
     public Reservation save(Reservation reservation) {
 
-        if (reservation.getId() == null) {
+        if (reservation.getIdReservation() == null) {
             reservation.setStatus("created");
+
+            Client client = reservation.getClient();
+
+            if (client != null) {
+                Integer id = client.getIdClient();
+
+                if (id != null) {
+                    Optional<Client> res = clientService.getClient(id);
+
+                    if (res.isPresent()) {
+                        reservation.setClient(res.get());
+                    }
+                }
+            }
+
+            Ortopedic ortopedic = reservation.getOrtopedic();
+
+            if (ortopedic != null) {
+                Integer id = ortopedic.getId();
+
+                if (id != null) {
+                    Optional<Ortopedic> res = ortopedicService.getOrtopedic(id);
+
+                    if (res.isPresent()) {
+                        reservation.setOrtopedic(res.get());
+                    }
+                }
+            }
 
             return reservationRepository.save(reservation);
         }
 
-        Optional<Reservation> res = reservationRepository.getReservation(reservation.getId());
+        Optional<Reservation> res = reservationRepository.getReservation(reservation.getIdReservation());
 
         if (res.isEmpty()) {
             return reservationRepository.save(reservation);
@@ -42,7 +78,7 @@ public class ReservationService {
     }
 
     public Reservation update(Reservation reservation) {
-        Optional<Reservation> res = reservationRepository.getReservation(reservation.getId());
+        Optional<Reservation> res = reservationRepository.getReservation(reservation.getIdReservation());
 
         if (!res.isEmpty()) {
             Reservation record = res.get();
@@ -55,7 +91,7 @@ public class ReservationService {
             if (startDate != null) {
                 record.setStartDate(startDate);
             }
-            
+
             if (devolutionDate != null) {
                 record.setDevolutionDate(devolutionDate);
             }

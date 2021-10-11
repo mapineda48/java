@@ -23,6 +23,13 @@ public class OrtopedicController {
     @Autowired
     private OrtopedicService ortopedicService;
 
+    @PostMapping("/all")
+    public List<Ortopedic> saveAndGetAll(@RequestBody Ortopedic ortopedic){
+        save(ortopedic);
+        
+        return getAll();
+    }
+
     @GetMapping("/all")
     public List<Ortopedic> getAll() {
         return ortopedicService.getAll();

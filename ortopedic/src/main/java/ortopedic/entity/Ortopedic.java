@@ -27,10 +27,12 @@ public class Ortopedic implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "categoryId")
+    @JsonIgnoreProperties("ortopedics")
     private Category category;
 
     @OneToMany
     @JoinColumn(name = "ortopedicId")
+    @JsonIgnoreProperties({ "ortopedic", "client" })
     private List<Message> messages;
 
     @OneToMany

@@ -1,5 +1,6 @@
 package ortopedic.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,10 @@ public class ClientService {
     public Client save(Client client) {
 
         if (client.getIdClient() == null) {
+            client.setMessages(Collections.emptyList());
+
+            client.setReservations(Collections.emptyList());
+
             return clientRepository.save(client);
         }
 

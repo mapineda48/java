@@ -17,27 +17,28 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Message implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idMessage;
 
     private String messageText;
-
-    @ManyToOne
-    @JoinColumn(name = "clientId")
-    @JsonIgnoreProperties({ "messages", "reservations" })
-    private Client client;
 
     @ManyToOne
     @JoinColumn(name = "ortopedicId")
     @JsonIgnoreProperties({ "messages", "reservations" })
     private Ortopedic ortopedic;
 
-    public Integer getId() {
-        return this.id;
+    @ManyToOne
+    @JoinColumn(name = "clientId")
+    @JsonIgnoreProperties({ "messages", "reservations" })
+    private Client client;
+
+    public Integer getIdMessage() {
+        return this.idMessage;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdMessage(Integer idMessage) {
+        this.idMessage = idMessage;
     }
+
 
     public String getMessageText() {
         return this.messageText;

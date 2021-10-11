@@ -23,6 +23,12 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @PostMapping("/all")
+    public List<Category> saveAndGetAll(@RequestBody Category category) {
+        categoryService.save(category);
+        return categoryService.getAll();
+    }
+
     @GetMapping("/all")
     public List<Category> getAll() {
         return categoryService.getAll();

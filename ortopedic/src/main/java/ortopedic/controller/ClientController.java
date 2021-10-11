@@ -23,6 +23,12 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
+    @PostMapping("/all")
+    public List<Client> saveAndGetAll(@RequestBody Client client) {
+        save(client);
+        return getAll();
+    }
+
     @GetMapping("/all")
     public List<Client> getAll() {
         return clientService.getAll();

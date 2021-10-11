@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idReservation;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
@@ -28,7 +28,6 @@ public class Reservation {
     private Date devolutionDate;
 
     private String status;
-    private Integer score;
 
     @ManyToOne
     @JsonIgnoreProperties("reservations")
@@ -40,12 +39,14 @@ public class Reservation {
     @JoinColumn(name = "cliendId")
     private Client client;
 
-    public Integer getId() {
-        return this.id;
+    private Integer score;
+
+    public Integer getIdReservation() {
+        return this.idReservation;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdReservation(Integer idReservation) {
+        this.idReservation = idReservation;
     }
 
     public Date getStartDate() {

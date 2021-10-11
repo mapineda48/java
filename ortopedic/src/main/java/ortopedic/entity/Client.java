@@ -17,9 +17,18 @@ public class Client implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idClient;
-    private String name;
     private String email;
+    private String password;
+    private String name;
     private Integer age;
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @OneToMany
     @JoinColumn(name = "clientId")
@@ -29,7 +38,6 @@ public class Client implements Serializable {
     @JoinColumn(name = "reservationId")
     private List<Reservation> reservations;
 
-
     public Integer getIdClient() {
         return this.idClient;
     }
@@ -37,7 +45,6 @@ public class Client implements Serializable {
     public void setIdClient(Integer idClient) {
         this.idClient = idClient;
     }
-
 
     public String getName() {
         return this.name;

@@ -1,11 +1,13 @@
 package ortopedic.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ortopedic.entity.Category;
 import ortopedic.entity.Ortopedic;
 import ortopedic.repository.OrtopedicRepository;
 
@@ -14,6 +16,9 @@ public class OrtopedicService {
 
     @Autowired
     private OrtopedicRepository ortopedicRepository;
+
+    @Autowired
+    private CategoryService categoryService;
 
     public List<Ortopedic> getAll() {
         return ortopedicRepository.getAll();
@@ -26,6 +31,24 @@ public class OrtopedicService {
     public Ortopedic save(Ortopedic ortopedic) {
 
         if (ortopedic.getId() == null) {
+            Category category = ortopedic.getCategory();
+
+            if (category != null) {
+                Integer id = category.getId();
+
+                if (id != null) {
+                    Optional<Category> res = categoryService.getCategory(id);
+
+                    if (res.isPresent()) {
+                        ortopedic.setCategory(res.get());
+                    }
+                }
+            }
+
+            ortopedic.setMessages(Collections.emptyList());
+
+            ortopedic.setReservations(Collections.emptyList());
+
             return ortopedicRepository.save(ortopedic);
         }
 

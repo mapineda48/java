@@ -1,5 +1,6 @@
 package ortopedic.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ortopedic.entity.Category;
+import ortopedic.entity.Ortopedic;
 import ortopedic.repository.CategoryRepository;
 
 @Service
@@ -26,6 +28,8 @@ public class CategoryService {
     public Category save(Category category) {
 
         if (category.getId() == null) {
+            category.setOrtopedics(Collections.emptyList());
+
             return categoryRepository.save(category);
         }
 
@@ -73,5 +77,4 @@ public class CategoryService {
         return aBoolean;
     }
 
-    
 }

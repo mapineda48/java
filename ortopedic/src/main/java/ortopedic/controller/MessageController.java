@@ -23,6 +23,12 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
+    @PostMapping("/all")
+    public List<Message> saveAndGetAll(@RequestBody Message message) {
+        save(message);
+        return getAll();
+    }
+
     @GetMapping("/all")
     public List<Message> getAll() {
         return messageService.getAll();
