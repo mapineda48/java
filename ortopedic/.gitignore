@@ -37,4 +37,5 @@ out/
 .vscode/
 
 ### dev ###
-/node
+node/
+src/main/resources/foo/

@@ -52,6 +52,7 @@ public class ClientService {
             String name = client.getName();
             String email = client.getEmail();
             Integer age = client.getAge();
+            String password = client.getPassword();
 
             if (name != null) {
                 record.setName(name);
@@ -63,6 +64,10 @@ public class ClientService {
 
             if (age != null) {
                 record.setAge(age);
+            }
+
+            if (password != null) {
+                record.setPassword(password);
             }
 
             clientRepository.save(record);
