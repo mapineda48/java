@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 
 import ortopedic.entity.Client;
 import ortopedic.entity.Ortopedic;
-import ortopedic.entity.Reservation;
+import ortopedic.entity.Reservation.Reservation;
+import ortopedic.entity.Reservation.ResultStatus;
 import ortopedic.repository.ReservationRepository;
 
 @Service
@@ -24,6 +25,14 @@ public class ReservationService {
     @Autowired
     private OrtopedicService ortopedicService;
 
+    public ResultStatus countStatus() {
+        return reservationRepository.countStatus();
+    };
+
+    public List<Reservation> getAllBetweenDate(String start, String end) {
+        return reservationRepository.findAllBetweenDate(start, end);
+    }
+
     public List<Reservation> getAll() {
         return reservationRepository.getAll();
     }
@@ -35,7 +44,9 @@ public class ReservationService {
     public Reservation save(Reservation reservation) {
 
         if (reservation.getIdReservation() == null) {
-            reservation.setStatus("created");
+            if (reservation.getStatus() == null) {
+                reservation.setStatus("created");
+            }
 
             Client client = reservation.getClient();
 

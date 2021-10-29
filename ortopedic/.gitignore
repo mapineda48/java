@@ -39,3 +39,4 @@ out/
 ### dev ###
 node/
 src/main/resources/foo/
+**/*.dev.*

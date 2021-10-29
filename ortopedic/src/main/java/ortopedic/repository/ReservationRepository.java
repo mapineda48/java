@@ -6,26 +6,35 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import ortopedic.entity.Reservation;
+import ortopedic.entity.Reservation.Reservation;
+import ortopedic.entity.Reservation.ResultStatus;
 
 @Repository
 public class ReservationRepository {
     @Autowired
-    private ReservationCrudRepository messageCrudRepository;
+    private ReservationCrudRepository reservationCrudRepository;
+
+    public ResultStatus countStatus() {
+        return reservationCrudRepository.countStatus();
+    };
+
+    public List<Reservation> findAllBetweenDate(String start, String end) {
+        return (List<Reservation>) reservationCrudRepository.findAllBetweenDate(start, end);
+    }
 
     public List<Reservation> getAll() {
-        return (List<Reservation>) messageCrudRepository.findAll();
+        return (List<Reservation>) reservationCrudRepository.findAll();
     }
 
     public Optional<Reservation> getReservation(Integer id) {
-        return messageCrudRepository.findById(id);
+        return reservationCrudRepository.findById(id);
     }
 
     public Reservation save(Reservation message) {
-        return messageCrudRepository.save(message);
+        return reservationCrudRepository.save(message);
     }
 
     public void delete(Reservation message) {
-        messageCrudRepository.delete(message);
+        reservationCrudRepository.delete(message);
     }
 }

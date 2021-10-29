@@ -1,4 +1,4 @@
-package ortopedic.entity;
+package ortopedic.entity.Reservation;
 
 import java.util.Date;
 
@@ -13,6 +13,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import ortopedic.entity.Client;
+import ortopedic.entity.Ortopedic;
 
 @Entity
 @Table(name = "reservation")

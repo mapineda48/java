@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import ortopedic.entity.Reservation.Reservation;
+
 @Entity
 @Table(name = "client")
 public class Client implements Serializable {

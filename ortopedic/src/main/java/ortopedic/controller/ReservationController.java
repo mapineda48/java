@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import ortopedic.entity.Reservation;
+import ortopedic.entity.Reservation.Reservation;
+import ortopedic.entity.Reservation.ResultStatus;
 import ortopedic.service.ReservationService;
 
 @RestController
@@ -30,6 +31,16 @@ public class ReservationController {
     public List<Reservation> saveAndGetAll(@RequestBody Reservation reservation) {
         save(reservation);
         return getAll();
+    }
+
+    @GetMapping("/report-status")
+    public ResultStatus countStatus() {
+        return reservationService.countStatus();
+    }
+
+    @GetMapping("/report-dates/{start}/{end}")
+    public List<Reservation> getAllBetweenDate(@PathVariable("start") String start, @PathVariable("end") String end) {
+        return reservationService.getAllBetweenDate(start, end);
     }
 
     @GetMapping("/all")

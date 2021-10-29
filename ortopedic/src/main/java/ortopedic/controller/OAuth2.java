@@ -11,11 +11,17 @@ public class OAuth2 extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests(a -> a.antMatchers("/", "/index.html", "/error", "/crud/**", "/api/**").permitAll()
-                .anyRequest().authenticated())
+        http.authorizeRequests(a -> a.antMatchers("/", "/index.html", "/error", "/crud/**", "/api/**", "/h2-console/**")
+                .permitAll().anyRequest().authenticated())
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .oauth2Login();
 
-        http.cors().and().csrf().disable();
+        http
+            .cors()
+            .and()
+            .csrf()
+            .disable()
+            // h2 console need it
+            .headers().frameOptions().sameOrigin();
     }
 }

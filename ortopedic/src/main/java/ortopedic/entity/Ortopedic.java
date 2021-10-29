@@ -14,6 +14,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import ortopedic.entity.Reservation.Reservation;
+
 @Entity
 @Table(name = "ortopedic")
 public class Ortopedic implements Serializable {
