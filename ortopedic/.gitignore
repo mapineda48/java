@@ -40,6 +40,7 @@ out/
 .vscode/
 
 ### dev ###
+__dev__
 node/
 src/main/resources/foo/
 **/*.dev.*
