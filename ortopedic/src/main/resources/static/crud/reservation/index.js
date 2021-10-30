@@ -15,7 +15,89 @@ const tRecord = getTemplate("#record");
 const tConfirm = getTemplate("#modal-confirm");
 const tAlert = getTemplate("#modal-alert");
 const tForm = getTemplate("#modal-form");
+const tStatus = getTemplate("#modal-status");
+const tSearchDates = getTemplate("#search-date");
+const tReportClient = getTemplate("#report-client");
 const tBtnOpenModal = getTemplate("#btn-open-modal");
+let isLoadingClient = false;
+body.find("#fetch-client").on("click", (event) => {
+    event.preventDefault();
+    if (isLoadingClient)
+        return;
+    isLoadingClient = true;
+    const url = baseUrl + "report-clients";
+    $.ajax({
+        url,
+        type: "GET",
+        dataType: "JSON",
+        contentType: "application/json",
+        success(data) {
+            isLoadingClient = false;
+            showClients(data);
+        },
+        error(jqXHR, status, err) {
+            isLoadingClient = false;
+            console.log({ jqXHR, status, err });
+            showAlert({
+                title: "Error al obtener el reporte",
+                description: err || "Desconocido",
+            });
+        },
+    });
+});
+body.find("#fetch-date").on("click", (e) => {
+    e.preventDefault();
+    if (isLoading)
+        return;
+    showFormDate({
+        onConfirm(data) {
+            loading();
+            const url = baseUrl + `report-dates/${data.start}/${data.end}`;
+            $.ajax({
+                url,
+                type: "GET",
+                dataType: "JSON",
+                contentType: "application/json",
+                success(data) {
+                    printRecords(data);
+                },
+                error(jqXHR, status, err) {
+                    console.log({ jqXHR, status, err });
+                    showAlert({
+                        title: "Error al obtener el reporte",
+                        description: err || "Desconocido",
+                    });
+                },
+            });
+        },
+    });
+});
+let isLoadingStatus = false;
+body.find("#fetch-status").on("click", (event) => {
+    event.preventDefault();
+    if (isLoadingStatus)
+        return;
+    isLoadingStatus = true;
+    const url = baseUrl + "report-status";
+    $.ajax({
+        url,
+        type: "GET",
+        dataType: "JSON",
+        contentType: "application/json",
+        success(data) {
+            isLoadingStatus = false;
+            showStatus(data);
+        },
+        error(jqXHR, status, err) {
+            isLoadingStatus = false;
+            console.log({ jqXHR, status, err });
+            showAlert({
+                title: "Error al obtener el reporte",
+                description: err || "Desconocido",
+            });
+        },
+    });
+});
 body.find("#btn-create").on("click", () => {
     showForm({
         title: "Cliente",
@@ -171,7 +253,11 @@ function message(message) {
 }
 function loading() {
     unmount();
+    isLoading = true;
     main.append(tLoading);
+    onUnmount(() => {
+        isLoading = false;
+    });
 }
 function fetchList(onSuccess) {
     if (isLoading || clients || ortopedics)
@@ -268,6 +354,103 @@ function showForm(opt) {
     };
     form.on("submit", onSucess);
     btnCancel.on("click", onCancel);
+    body.append(modal);
+    body.append(btn);
+    btn.trigger("click");
+    btn.detach();
+}
+function showFormDate(opt) {
+    const id = "Form" + Date.now();
+    console.log(tSearchDates);
+    const modal = render(tSearchDates).setAll("id", id).get();
+    const btn = render(tBtnOpenModal).set("id", id).get();
+    const form = modal.find("form");
+    const btnCancel = modal.find("#app-modal-cancel");
+    const onSucess = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (opt.onConfirm) {
+            const data = Object.fromEntries(form.serializeArray().map((pair) => [pair.name, pair.value]));
+            opt.onConfirm({
+                ...data,
+                start: formatDate(data.start),
+                end: formatDate(data.end),
+            });
+            btnCancel.trigger("click");
+        }
+    };
+    const onCancel = (event) => {
+        if (event) {
+            event.stopPropagation();
+        }
+        if (opt.onCancel)
+            opt.onCancel();
+        form.off("submit", onSucess);
+        btnCancel.off("click", onCancel);
+        setTimeout(() => {
+            modal.detach();
+            if (opt.onEnd)
+                opt.onEnd();
+        }, 200);
+    };
+    form.on("submit", onSucess);
+    btnCancel.on("click", onCancel);
+    body.append(modal);
+    body.append(btn);
+    btn.trigger("click");
+    btn.detach();
+}
+function showClients(data) {
+    const id = "Client" + Date.now();
+    const clients = data
+        .map(({ total, client }) => {
+        return `<div class="mb-3"><p><strong>${client.name}  :</strong>  ${total}</p></div>`;
+    })
+        .join("");
+    const modal = render(tReportClient)
+        .setAll("id", id)
+        .set("clients", clients)
+        .get();
+    const btn = render(tBtnOpenModal).set("id", id).get();
+    const btnSucess = modal.find("#app-modal-sucess");
+    const onSucess = (event) => {
+        if (event) {
+            event.stopPropagation();
+        }
+        modal.off("click", onSucess);
+        btnSucess.off("click", onSucess);
+        setTimeout(() => {
+            modal.detach();
+        }, 200);
+    };
+    modal.on("click", onSucess);
+    btnSucess.on("click", onSucess);
+    body.append(modal);
+    body.append(btn);
+    btn.trigger("click");
+    btn.detach();
+}
+function showStatus(opt) {
+    const id = "Status" + Date.now();
+    const modal = render(tStatus)
+        .setAll("id", id)
+        .set("cancelled", opt.cancelled)
+        .set("completed", opt.completed)
+        .get();
+    const btn = render(tBtnOpenModal).set("id", id).get();
+    const btnSucess = modal.find("#app-modal-sucess");
+    const onSucess = (event) => {
+        if (event) {
+            event.stopPropagation();
+        }
+        modal.off("click", onSucess);
+        btnSucess.off("click", onSucess);
+        setTimeout(() => {
+            modal.detach();
+        }, 200);
+    };
+    modal.on("click", onSucess);
+    btnSucess.on("click", onSucess);
     body.append(modal);
     body.append(btn);
     btn.trigger("click");
