@@ -1,3 +1,6 @@
+# Production
+application.properties
+
 HELP.md
 .gradle
 build/

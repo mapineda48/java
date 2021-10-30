@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ortopedic.entity.Reservation.Reservation;
+import ortopedic.entity.Reservation.ReportClient;
 import ortopedic.entity.Reservation.ResultStatus;
 import ortopedic.service.ReservationService;
 
@@ -31,6 +32,11 @@ public class ReservationController {
     public List<Reservation> saveAndGetAll(@RequestBody Reservation reservation) {
         save(reservation);
         return getAll();
+    }
+
+    @GetMapping("/report-clients")
+    public List<ReportClient> reportClient() {
+        return reservationService.reportClient();
     }
 
     @GetMapping("/report-status")

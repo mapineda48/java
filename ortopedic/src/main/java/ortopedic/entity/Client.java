@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import ortopedic.entity.Reservation.Reservation;
 
 @Entity
@@ -36,8 +39,8 @@ public class Client implements Serializable {
     @JoinColumn(name = "clientId")
     private List<Message> messages;
 
-    @OneToMany
-    @JoinColumn(name = "reservationId")
+    @OneToMany(mappedBy="client")
+    @JsonIgnoreProperties("client")
     private List<Reservation> reservations;
 
     public Integer getIdClient() {

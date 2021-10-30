@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ortopedic.entity.Client;
 import ortopedic.entity.Ortopedic;
 import ortopedic.entity.Reservation.Reservation;
+import ortopedic.entity.Reservation.ReportClient;
 import ortopedic.entity.Reservation.ResultStatus;
 import ortopedic.repository.ReservationRepository;
 
@@ -24,6 +25,10 @@ public class ReservationService {
 
     @Autowired
     private OrtopedicService ortopedicService;
+
+    public List<ReportClient> reportClient() {
+        return reservationRepository.reportClient();
+    }
 
     public ResultStatus countStatus() {
         return reservationRepository.countStatus();

@@ -7,12 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ortopedic.entity.Reservation.Reservation;
+import ortopedic.entity.Reservation.ReportClient;
 import ortopedic.entity.Reservation.ResultStatus;
 
 @Repository
 public class ReservationRepository {
     @Autowired
     private ReservationCrudRepository reservationCrudRepository;
+
+    public List<ReportClient> reportClient() {
+        return (List<ReportClient>) reservationCrudRepository.reportClients();
+    }
 
     public ResultStatus countStatus() {
         return reservationCrudRepository.countStatus();
