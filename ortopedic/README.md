@@ -12,6 +12,8 @@ This project was carried out as the final activity of cycle 3 in training as a [
 
 - [Features](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html)
 
+- [VM Ubuntu Oracle Cloud](https://stackoverflow.com/questions/62326988/cant-access-oracle-cloud-always-free-compute-http-port)
+
 ## License
 
 MIT
