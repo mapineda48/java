@@ -1,0 +1,20 @@
+#form-login p {
+  margin: 0;
+}
+
+#form-login h3,
+#form-login p {
+  text-align: center;
+}
+
+#form-login {
+  padding: 1em;
+}
+
+body {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

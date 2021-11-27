@@ -1,0 +1,19 @@
+version: "3.8"
+services: 
+  web:
+    image: "openjdk:11-jdk-slim-buster"
+    tty: true
+    environment:
+      MONGO_URI: "mongodb://app:example@db:27017/ocho?authSource=admin"
+    volumes:
+      - "$PWD:/home/app"
+    ports:
+      - "3000:8080"
+    depends_on:
+      - db
+  db:
+    image: mongo:4.4.11-rc0-focal
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: app
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: ocho
