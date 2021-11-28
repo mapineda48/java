@@ -16,63 +16,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import ocho.entity.User;
-import ocho.service.UserService;
+import ocho.entity.Laptop;
+import ocho.service.LaptopService;
 
 @RestController
-@RequestMapping("/api/user")
-public class UserController {
+@RequestMapping("/api/laptop")
+public class LaptopController {
 
     @Autowired
-    private UserService userService;
+    private LaptopService laptopService;
 
     @GetMapping("/all")
-    public List<User> findAll() {
-        return userService.findAll();
+    public List<Laptop> findAll() {
+        return laptopService.findAll();
     }
 
     @GetMapping("/id/{id}")
-    public Optional<User> findById(@PathVariable("id") BigInteger id) {
-        return userService.findById(id);
-    }
-
-    @GetMapping("/emailexist/{email}")
-    public boolean findByEmail(@PathVariable("email") String email) {
-        var res = userService.findByEmail(email);
-
-        if (res.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @GetMapping("/{email}/{password}")
-    public User login(@PathVariable("email") String email, @PathVariable("password") String password) {
-        return userService.login(email, password);
+    public Optional<Laptop> findById(@PathVariable("id") BigInteger id) {
+        return laptopService.findById(id);
     }
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public User save(@RequestBody User user) {
+    public Laptop save(@RequestBody Laptop laptop) {
         try {
-            return userService.save(user);
+            return laptopService.save(laptop);
         } catch (Exception e) {
             System.out.println(e);
-            return new User();
+            return new Laptop();
         }
     }
 
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public User update(@RequestBody User user) {
-        return userService.update(user);
+    public Laptop update(@RequestBody Laptop laptop) {
+        return laptopService.update(laptop);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public boolean delete(@PathVariable("id") BigInteger id) {
-        return userService.delete(id);
+        return laptopService.delete(id);
     }
 
 }

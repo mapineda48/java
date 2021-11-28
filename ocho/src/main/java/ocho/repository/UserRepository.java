@@ -1,5 +1,6 @@
 package ocho.repository;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,7 @@ public class UserRepository {
         return (List<User>) userCrudRepository.findAll();
     }
 
-    public Optional<User> findById(String id) {
+    public Optional<User> findById(BigInteger id) {
         return userCrudRepository.findById(id);
     }
 
@@ -33,9 +34,9 @@ public class UserRepository {
         } else {
             User user = new User();
 
-            user.setPassword(password);
-            user.setEmail(email);
-            user.setName("NO DEFINIDO");
+            // user.setPassword(password);
+            // user.setEmail(email);
+            // user.setName("NO DEFINIDO");
 
             return user;
         }

@@ -1,5 +1,6 @@
 package ocho.service;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +20,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findById(String id) {
+    public Optional<User> findById(BigInteger id) {
         return userRepository.findById(id);
     }
 
@@ -41,21 +42,23 @@ public class UserService {
         if (!res.isEmpty()) {
             User record = res.get();
 
-            String name = user.getName();
-            String email = user.getEmail();
-            String password = user.getPassword();
+            var name = user.getName();
+            var email = user.getEmail();
+            var password = user.getPassword();
+            var address = user.getAddress();
+            var identification = user.getIdentification();
+            var type = user.getType();
+            var zone = user.getZone();
+            var cellPhone = user.getCellPhone();
 
-            if (name != null) {
-                record.setName(name);
-            }
-
-            if (email != null) {
-                record.setEmail(email);
-            }
-
-            if (password != null) {
-                record.setPassword(password);
-            }
+            record.setName(name);
+            record.setEmail(email);
+            record.setPassword(password);
+            record.setAddress(address);
+            record.setCellPhone(cellPhone);
+            record.setIdentification(identification);
+            record.setType(type);
+            record.setZone(zone);
 
             userRepository.save(record);
 
@@ -66,7 +69,7 @@ public class UserService {
 
     }
 
-    public boolean delete(String id) {
+    public boolean delete(BigInteger id) {
         Boolean aBoolean = findById(id).map(user -> {
             userRepository.delete(user);
             return true;

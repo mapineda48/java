@@ -1,5 +1,8 @@
 package ocho.entity;
 
+import java.math.BigInteger;
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,10 +17,26 @@ import lombok.NoArgsConstructor;
 @Document
 public class User {
     @Id
-    private String id;
+    private BigInteger id;
+    
+    private String identification;
+
+    private String name;
+    
+    private String address;
+
+    private String cellPhone;
 
     @Indexed(unique = true)
     private String email;
+
     private String password;
-    private String name;
+
+    private String zone;
+
+    private String type;
+
+    // private Date birthtDay;
+
+    // private String monthBirthtDay;
 }
