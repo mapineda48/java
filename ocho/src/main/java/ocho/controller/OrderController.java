@@ -26,7 +26,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/zone/{zone}")
+    @GetMapping("/zona/{zone}")
     public List<Order> findByZone(@PathVariable("zone") String zone) {
         return orderService.findByZone(zone);
     }
