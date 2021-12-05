@@ -12,21 +12,21 @@ import ocho.entity.Laptop;
 @Repository
 public class LaptopRepository {
     @Autowired
-    private LaptopCrudRepository LaptopCrudRepository;
+    private LaptopCrudRepository laptopCrudRepository;
 
     public List<Laptop> findAll() {
-        return (List<Laptop>) LaptopCrudRepository.findAll();
+        return (List<Laptop>) laptopCrudRepository.findAll();
     }
 
     public Optional<Laptop> findById(BigInteger id) {
-        return LaptopCrudRepository.findById(id);
+        return laptopCrudRepository.findById(id);
     }
 
     public Laptop save(Laptop laptop) {
-        return LaptopCrudRepository.save(laptop);
+        return laptopCrudRepository.save(laptop);
     }
 
     public void delete(Laptop laptop) {
-        LaptopCrudRepository.delete(laptop);
+        laptopCrudRepository.delete(laptop);
     }
 }

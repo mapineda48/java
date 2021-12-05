@@ -16,47 +16,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import ocho.entity.Laptop;
-import ocho.service.LaptopService;
+import ocho.entity.Order;
+import ocho.service.OrderService;
 
 @RestController
-@RequestMapping("/api/laptop")
-public class LaptopController {
+@RequestMapping("/api/order")
+public class OrderController {
 
     @Autowired
-    private LaptopService laptopService;
+    private OrderService orderService;
+
+    @GetMapping("/zone/{zone}")
+    public List<Order> findByZone(@PathVariable("zone") String zone) {
+        return orderService.findByZone(zone);
+    }
 
     @GetMapping("/all")
-    public List<Laptop> findAll() {
-        return laptopService.findAll();
+    public List<Order> findAll() {
+        return orderService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Optional<Laptop> findById(@PathVariable("id") BigInteger id) {
-        return laptopService.findById(id);
+    public Optional<Order> findById(@PathVariable("id") BigInteger id) {
+        return orderService.findById(id);
     }
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public Laptop save(@RequestBody Laptop laptop) {
+    public Order save(@RequestBody Order order) {
         try {
-            return laptopService.save(laptop);
+            return orderService.save(order);
         } catch (Exception e) {
             System.out.println(e);
-            return new Laptop();
+            return new Order();
         }
     }
 
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public Laptop update(@RequestBody Laptop laptop) {
-        return laptopService.update(laptop);
+    public Order update(@RequestBody Order order) {
+        return orderService.update(order);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public boolean delete(@PathVariable("id") BigInteger id) {
-        return laptopService.delete(id);
+        return orderService.delete(id);
     }
 
 }

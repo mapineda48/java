@@ -23,11 +23,15 @@ public class User {
 
     private String name;
     
+    private Date birthtDay;
+
+    private String monthBirthtDay;
+    
     private String address;
 
     private String cellPhone;
 
-    @Indexed(unique = true)
+    //@Indexed(unique = true)
     private String email;
 
     private String password;
@@ -36,7 +40,4 @@ public class User {
 
     private String type;
 
-    // private Date birthtDay;
-
-    // private String monthBirthtDay;
 }

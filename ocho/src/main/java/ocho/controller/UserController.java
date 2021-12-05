@@ -31,7 +31,7 @@ public class UserController {
         return userService.findAll();
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public Optional<User> findById(@PathVariable("id") BigInteger id) {
         return userService.findById(id);
     }
