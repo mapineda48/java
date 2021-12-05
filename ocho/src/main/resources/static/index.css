@@ -1,0 +1,46 @@
+#workspace .welcome,
+#workspace .some-message {
+  position: absolute;
+  top: 50vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+header .logout {
+  color: white;
+  cursor: pointer;
+  border: 0;
+  background-color: transparent;
+}
+
+#btn-create-record {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+}
+
+#form-login p {
+  margin: 0;
+}
+
+#form-login h3,
+#form-login p {
+  text-align: center;
+}
+
+#form-login {
+  padding: 1em;
+}
+
+.view-login form {
+  max-width: 300px;
+}
+
+.view-login {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
