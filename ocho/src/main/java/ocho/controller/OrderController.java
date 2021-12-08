@@ -26,6 +26,16 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @GetMapping("/state/{status}/{id}")
+    public List<Order> findByStatusAndSalesMan(@PathVariable("status") String status, @PathVariable("id") Integer id) {
+        return orderService.findByStatusAndSalesMan(status, id);
+    }
+
+    @GetMapping("/salesman/{id}")
+    public List<Order> findBySalesMan(@PathVariable("id") Integer id) {
+        return orderService.findBySalesMan(id);
+    }
+
     @GetMapping("/zona/{zone}")
     public List<Order> findByZone(@PathVariable("zone") String zone) {
         return orderService.findByZone(zone);

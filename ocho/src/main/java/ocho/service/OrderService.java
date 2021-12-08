@@ -16,6 +16,14 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
+    public List<Order> findByStatusAndSalesMan(String status, Integer id) {
+        return orderRepository.findByStatusAndSalesMan(status, id);
+    }
+
+    public List<Order> findBySalesMan(Integer id) {
+        return orderRepository.findBySalesMan(id);
+    }
+
     public List<Order> findByZone(String zone) {
         return orderRepository.findByZone(zone);
     }
