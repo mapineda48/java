@@ -1,0 +1,22 @@
+.sign-in {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    padding: 1em;
+
+    max-width: 300px;
+
+    p,
+    h3 {
+      text-align: center;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+}
