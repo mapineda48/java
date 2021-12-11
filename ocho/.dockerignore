@@ -1,6 +1,8 @@
 __dev__
 **/*.dev.*
 
+src/main/resources/static/
+
 HELP.md
 .gradle
 build/

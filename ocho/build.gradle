@@ -29,3 +29,32 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+task delBuildView(type: Delete) {
+    delete "src/main/resources/static"
+}
+
+task buildView(type: Exec) {
+  workingDir './view'
+
+  commandLine 'yarn', 'build'
+
+  standardOutput = new ByteArrayOutputStream()
+
+  ext.output = {
+    return standardOutput.toString()
+  }
+}
+
+task copyBuildView(type: Copy){
+	from 'view/build'
+	into 'src/main/resources/static'
+}
+
+task cleanBuildView(type: GradleBuild){
+	tasks = ['buildView', 'delBuildView', 'copyBuildView']
+}
+
+task buildDist(type: GradleBuild){
+	tasks = ['cleanBuildView', 'build']
+}
