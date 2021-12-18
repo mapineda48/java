@@ -14,22 +14,30 @@ import ocho.repository.LaptopRepository;
 public class LaptopService {
 
     @Autowired
-    private LaptopRepository LaptopRepository;
+    private LaptopRepository laptopRepository;
+
+    public List<Laptop> findByDescription(String description) {
+        return laptopRepository.findByDescription(description);
+    }
+
+    public List<Laptop> findByPrice(Double price) {
+        return laptopRepository.findByPrice(price);
+    };
 
     public List<Laptop> findAll() {
-        return LaptopRepository.findAll();
+        return laptopRepository.findAll();
     }
 
     public Optional<Laptop> findById(BigInteger id) {
-        return LaptopRepository.findById(id);
+        return laptopRepository.findById(id);
     }
 
     public Laptop save(Laptop laptop) {
-        return LaptopRepository.save(laptop);
+        return laptopRepository.save(laptop);
     }
 
     public Laptop update(Laptop laptop) {
-        Optional<Laptop> res = LaptopRepository.findById(laptop.getId());
+        Optional<Laptop> res = laptopRepository.findById(laptop.getId());
 
         if (!res.isEmpty()) {
             Laptop record = res.get();
@@ -56,7 +64,7 @@ public class LaptopService {
             record.setProcesor(procesor);
             record.setQuantity(quantity);
 
-            LaptopRepository.save(record);
+            laptopRepository.save(record);
 
             return record;
         } else {
@@ -67,7 +75,7 @@ public class LaptopService {
 
     public boolean delete(BigInteger id) {
         Boolean aBoolean = findById(id).map(Laptop -> {
-            LaptopRepository.delete(Laptop);
+            laptopRepository.delete(Laptop);
             return true;
         }).orElse(false);
 

@@ -16,6 +16,10 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public List<User> findByMonthDay(String monthDay) {
+        return userRepository.findByMonthDay(monthDay);
+    };
+
     public List<User> findAll() {
         return userRepository.findAll();
     }

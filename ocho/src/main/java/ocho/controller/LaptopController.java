@@ -26,6 +26,16 @@ public class LaptopController {
     @Autowired
     private LaptopService laptopService;
 
+    @GetMapping("/description/{description}")
+    public List<Laptop> findByDescription(@PathVariable("description") String description) {
+        return laptopService.findByDescription(description);
+    }
+
+    @GetMapping("/price/{price}")
+    public List<Laptop> findByPrice(@PathVariable("price") Double price) {
+        return laptopService.findByPrice(price);
+    };
+
     @GetMapping("/all")
     public List<Laptop> findAll() {
         return laptopService.findAll();

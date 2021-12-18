@@ -14,6 +14,14 @@ public class LaptopRepository {
     @Autowired
     private LaptopCrudRepository laptopCrudRepository;
 
+    public List<Laptop> findByDescription(String description) {
+        return laptopCrudRepository.findByDescription(description);
+    }
+
+    public List<Laptop> findByPrice(Double price) {
+        return laptopCrudRepository.findByPrice(price);
+    };
+
     public List<Laptop> findAll() {
         return (List<Laptop>) laptopCrudRepository.findAll();
     }

@@ -26,6 +26,10 @@ public class UserRepository {
         return userCrudRepository.findByEmail(email);
     }
 
+    public List<User> findByMonthDay(String monthDay) {
+        return userCrudRepository.findByMonthDay(monthDay);
+    };
+
     public User login(String email, String password) {
         var res = userCrudRepository.login(email, password);
 

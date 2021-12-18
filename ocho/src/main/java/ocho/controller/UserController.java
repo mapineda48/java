@@ -31,6 +31,11 @@ public class UserController {
         return userService.findAll();
     }
 
+    @GetMapping("/birthday/{monthDay}")
+    public List<User> findByMonthDay(@PathVariable("monthDay") String monthDay) {
+        return userService.findByMonthDay(monthDay);
+    };
+
     @GetMapping("/{id}")
     public Optional<User> findById(@PathVariable("id") BigInteger id) {
         return userService.findById(id);
