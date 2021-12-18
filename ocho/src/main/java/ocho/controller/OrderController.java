@@ -1,8 +1,15 @@
 package ocho.controller;
 
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import javax.swing.text.DateFormatter;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +29,29 @@ import ocho.service.OrderService;
 @RestController
 @RequestMapping("/api/order")
 public class OrderController {
+    private static String FORMAT_DATE ="yyyy-MM-dd'T'HH:mm:ss.SSSXXX"; 
+
 
     @Autowired
     private OrderService orderService;
+
+    @GetMapping("/date/{date}/{id}")
+    public List<Order> findByDateAndSalesMan(@PathVariable("date") String date,
+            @PathVariable("id") Integer id) {
+
+        try {
+            var dateTime = date + "T05:00:00.000+00:00";
+
+            var registerDay = new SimpleDateFormat(FORMAT_DATE).parse(dateTime);
+
+            return orderService.findByDateAndSalesMan(registerDay, id);
+        } catch (Exception e) {
+            System.out.println(e);
+
+            return new ArrayList<Order>();
+        }
+
+    };
 
     @GetMapping("/state/{status}/{id}")
     public List<Order> findByStatusAndSalesMan(@PathVariable("status") String status, @PathVariable("id") Integer id) {

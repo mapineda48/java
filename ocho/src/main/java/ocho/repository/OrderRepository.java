@@ -1,6 +1,7 @@
 package ocho.repository;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,11 @@ import ocho.entity.Order;
 public class OrderRepository {
     @Autowired
     private OrderCrudRepository orderCrudRepository;
+
+    public List<Order> findByDateAndSalesMan(Date registerDay, Integer id){
+        return orderCrudRepository.findByDateAndSalesMan(registerDay, id);
+    };
+
 
     public List<Order> findByStatusAndSalesMan(String status, Integer id) {
         return orderCrudRepository.findByStatusAndSalesMan(status, id);
