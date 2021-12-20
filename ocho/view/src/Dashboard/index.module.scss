@@ -1,0 +1,23 @@
+.main {
+  .welcome,
+  .message {
+    position: absolute;
+    top: 50vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.logout {
+  color: white;
+  cursor: pointer;
+  border: 0;
+  background-color: transparent;
+}
+
+.btnCreate {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+}

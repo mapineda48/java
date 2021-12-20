@@ -34,8 +34,22 @@ task delBuildView(type: Delete) {
     delete "src/main/resources/static"
 }
 
+task installView(type: Exec) {
+  workingDir './view'
+
+  commandLine 'yarn', 'install'
+
+  standardOutput = new ByteArrayOutputStream()
+
+  ext.output = {
+    return standardOutput.toString()
+  }
+}
+
 task buildView(type: Exec) {
   workingDir './view'
+
+  environment GENERATE_SOURCEMAP: 'false'
 
   commandLine 'yarn', 'build'
 
@@ -52,7 +66,7 @@ task copyBuildView(type: Copy){
 }
 
 task cleanBuildView(type: GradleBuild){
-	tasks = ['buildView', 'delBuildView', 'copyBuildView']
+	tasks = ['installView','buildView', 'delBuildView', 'copyBuildView']
 }
 
 task buildDist(type: GradleBuild){

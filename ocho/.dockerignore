@@ -40,3 +40,28 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### View ###
+
+# dependencies
+view/node_modules
+view/.pnp
+view/.pnp.js
+view/.env
+
+# testing
+view/coverage
+
+# production
+view/build
+
+# misc
+view/.DS_Store
+view/.env.local
+view/.env.development.local
+view/.env.test.local
+view/.env.production.local
+
+view/npm-debug.log*
+view/yarn-debug.log*
+view/yarn-error.log*

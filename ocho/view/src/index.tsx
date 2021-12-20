@@ -1,13 +1,35 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Portals from "./Portals";
+import Home from "./Home";
+import Session from "./Session";
 import SignIn from "./SignIn";
+import Dashboard from "./Dashboard";
+import reportWebVitals from "./reportWebVitals";
 
-import './index.scss';
+import "./index.scss";
 
 ReactDOM.render(
   <React.StrictMode>
-    <SignIn />
+    <Portals>
+      <Session>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<SignIn />} />
+            <Route path="/dashboard/*" element={<Dashboard />} />
+            <Route
+              path="*"
+              element={
+                <div style={{ padding: "1rem" }}>
+                  <p>There's nothing here!</p>
+                </div>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </Session>
+    </Portals>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -1,11 +1,48 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useAlert } from "../Alert";
+import { useSignUp } from "../Modal";
+import { useSession } from "../Session";
+import { getDataForm, setLoading } from "../vanilla";
 import "./index.scss";
 
 export default function Login() {
+  const navigate = useNavigate();
+  const session = useSession();
+  const showAlert = useAlert();
+  const signup = useSignUp();
+
+  React.useEffect(() => {
+    if (session.user) navigate("/dashboard/");
+  }, [navigate, session.user]);
+
+  if (session.user) return null;
+
   return (
     <div className="sign-in">
-      <form id="form-login" className="card">
+      <form
+        className="card"
+        onSubmit={async (e) => {
+          e.preventDefault();
+
+          const form = e.currentTarget;
+
+          const { email, password } = getDataForm(form);
+
+          const ready = setLoading(form);
+
+          try {
+            await session.signin(email, password);
+          } catch (error: any) {
+            showAlert({
+              title: "Ups...",
+              message: error?.message || "unknown",
+            });
+            ready();
+          }
+        }}
+      >
         <div className="mb-3">
           <h3>Ocho</h3>
         </div>
@@ -18,7 +55,7 @@ export default function Login() {
             name="email"
             required
             className="form-control"
-            id="email"
+            
             aria-describedby="emailHelp"
           />
         </div>
@@ -31,7 +68,7 @@ export default function Login() {
             required
             className="form-control"
             name="password"
-            id="password"
+            
           />
         </div>
         <div className="mb-3">
@@ -39,7 +76,20 @@ export default function Login() {
             <strong>¿No tienes cuenta?</strong>{" "}
           </p>
           <p>
-            <a href="#" id="create-account">
+            <a
+              onClick={() => {
+                showAlert({
+                  title: "Profe",
+                  message:
+                    "Esto no estaba en los requerimientos, pero lo hago para facilitar el testeo.",
+                  onUnMount() {
+                    signup({});
+                  },
+                });
+              }}
+              href="#"
+              
+            >
               Crea tu cuenta aquí
             </a>
           </p>

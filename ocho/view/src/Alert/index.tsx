@@ -1,25 +1,21 @@
 import React from "react";
 import { usePortalBody } from "../Portals";
-import * as bootstrap from "bootstrap";
+import useModal from "../useModal";
 
-export default function Alert() {
-  const ref = React.useRef<HTMLDivElement>(null);
+export default function Alert(props: Props) {
+  const { error, message, onHide, onUnMount } = props;
 
-  React.useEffect(() => {
-    if (!ref.current) return;
+  const ref = useModal(onHide, onUnMount);
 
-    const modal = new bootstrap.Modal(ref.current);
-
-    modal.show();
-
-    console.log(modal);
-  });
+  if (error) {
+    console.error(error);
+  }
 
   return (
     <div
       ref={ref}
       className="modal fade"
-      id="exampleModal"
+      
       tabIndex={-1}
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
@@ -27,8 +23,8 @@ export default function Alert() {
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">
-              title
+            <h5 className="modal-title" >
+              {props.title || "Alerta"}
             </h5>
             <button
               type="button"
@@ -37,11 +33,13 @@ export default function Alert() {
               aria-label="Close"
             />
           </div>
-          <div className="modal-body">message</div>
+          <div className="modal-body">
+            {error?.message || message || "Unknown"}
+          </div>
           <div className="modal-footer">
             <button
               autoFocus
-              id="btn-action"
+              
               type="button"
               className="btn btn-primary"
               data-bs-dismiss="modal"
@@ -53,4 +51,36 @@ export default function Alert() {
       </div>
     </div>
   );
+}
+
+export function useAlert() {
+  const append = usePortalBody();
+
+  return React.useCallback(
+    (opt: Props) => {
+      append(({ remove }) => {
+        return (
+          <Alert
+            {...opt}
+            onHide={() => {
+              if (opt.onHide) opt.onHide();
+              remove();
+            }}
+          />
+        );
+      });
+    },
+    [append]
+  );
+}
+
+/**
+ * Types
+ */
+interface Props {
+  error?: any;
+  message?: string;
+  title?: string;
+  onHide?: () => void;
+  onUnMount?: () => void;
 }
