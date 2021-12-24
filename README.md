@@ -1,3 +1,3 @@
 # Java Projects
 
-All the directories in the root are projects to play and learn to program with the java language.
+This repository is where the projects where I put into practice the use of the Java programming language are located, each of these has a README in the root of the project.
