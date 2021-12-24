@@ -69,6 +69,6 @@ task cleanBuildView(type: GradleBuild){
 	tasks = ['installView','buildView', 'delBuildView', 'copyBuildView']
 }
 
-task buildDist(type: GradleBuild){
+task dist(type: GradleBuild){
 	tasks = ['cleanBuildView', 'build']
 }

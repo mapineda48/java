@@ -4,8 +4,8 @@ WORKDIR /home/builder
 
 COPY . .
 
-RUN bash ./deps.sh; \
-    ./gradlew buildDist
+RUN bash ./install.sh; \
+    ./gradlew dist
 
 
 # https://pkgs.alpinelinux.org/package/edge/community/x86_64/openjdk11
