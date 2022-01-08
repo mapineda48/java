@@ -1,3 +1,3 @@
-# Java Projects
+# Java
 
-This repository is where the projects where I put into practice the use of the Java programming language are located, each of these has a README in the root of the project.
+In this repository personal projects on final java ended, without any special importance, they were with which I tried to strengthen my knowledge of the language.
