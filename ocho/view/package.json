@@ -15,12 +15,13 @@
     "bootstrap": "^5.1.3",
     "history": "5",
     "mp48-cra": "^0.0.4",
-    "mp48-react": "^0.0.3",
+    "mp48-react": "0.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.1.0",
     "react-scripts": "4.0.3",
     "sass": "^1.45.0",
+    "ts-node": "^10.4.0",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
   },
@@ -28,7 +29,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "ts-node -r dotenv/config -r node-localstorage/register",
+    "types": "tsc"
   },
   "eslintConfig": {
     "extends": [
@@ -47,5 +50,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "node-localstorage": "^2.2.1"
   }
 }

@@ -2,20 +2,21 @@
 import React from "react";
 import { Link, Navigate, Routes, Route, useNavigate } from "react-router-dom";
 import Card from "./Card";
-import { useSession } from "../Session";
+import { useApi, useLogout } from "../Session";
 import { useAlert } from "../Alert";
-import createAsyncHook from "../createAsyncHook";
-import api from "../api";
+import { usePromise } from "../createAsyncHook/usePromise";
 import style from "./index.module.scss";
 import { useModalUser, useModalLaptop } from "../Modal";
 
-const useFetchUsers = createAsyncHook(api.user.fetchAll);
-const useFetchLaptops = createAsyncHook(api.laptop.fetchAll);
-
 export function Laptops() {
-  const [loading, error, res, refresh] = useFetchLaptops();
+  const api = useApi();
 
-  if (loading) {
+  const [isLoading, error, res, fetchAll] = usePromise(
+    false,
+    api.laptop.fetchAll
+  );
+
+  if (isLoading) {
     return <Loading />;
   }
 
@@ -30,16 +31,21 @@ export function Laptops() {
   return (
     <Cards>
       {res.map((laptop, key) => (
-        <Card.Laptop record={laptop} key={key} onChange={refresh} />
+        <Card.Laptop record={laptop} key={key} onChange={fetchAll} />
       ))}
     </Cards>
   );
 }
 
 export function Users() {
-  const [loading, error, res, refresh] = useFetchUsers();
+  const api = useApi();
 
-  if (loading) {
+  const [isLoading, error, res, fetchAll] = usePromise(
+    false,
+    api.user.fetchAll
+  );
+
+  if (isLoading) {
     return <Loading />;
   }
 
@@ -54,7 +60,7 @@ export function Users() {
   return (
     <Cards>
       {res.map((user, key) => (
-        <Card.User record={user} key={key} onChange={refresh} />
+        <Card.User record={user} key={key} onChange={fetchAll} />
       ))}
     </Cards>
   );
@@ -108,16 +114,10 @@ export function Welcome() {
 
 export default function Navigation() {
   const navigate = useNavigate();
-  const session = useSession();
   const showAlert = useAlert();
   const insertUser = useModalUser();
   const insertLaptop = useModalLaptop();
-
-  React.useEffect(() => {
-    if (!session.user) navigate("/");
-  }, [navigate, session.user]);
-
-  if (!session.user) return null;
+  const logout = useLogout();
 
   return (
     <div>
@@ -195,11 +195,7 @@ export default function Navigation() {
                   </form>
                 </li>
               </ul>
-              <button
-                onClick={session.logout}
-                className={style.logout}
-                title="Salir"
-              >
+              <button onClick={logout} className={style.logout} title="Salir">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width={20}

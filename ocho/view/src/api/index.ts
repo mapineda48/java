@@ -1,28 +1,44 @@
-import axios from "axios";
-import * as user from "./user";
-import * as laptop from "./laptop";
-import * as order from "./order";
+import UserCRUD from "./user";
+import OrderCRUD from "./order";
+import LaptopCRUD from "./laptop";
+import { session } from "./session";
 
+import type { HttpSession } from "./session";
 import type * as User from "./user";
 import type * as Laptop from "./laptop";
 import type * as Order from "./order";
 
-export async function signIn(mail: string, password: string) {
-  const res = await axios.get(`/api/user/${mail}/${password}`);
+export async function signin(email: string, password: string) {
+  const httpSession = await session.signin(email, password);
 
-  return res.data as User.Record;
+  return createAPI(httpSession);
 }
 
-const api = {
-  signIn,
-  user,
-  laptop,
-  order,
-};
+export async function validateSession() {
+  const httpSession = await session.getCurrent();
 
-export default api;
+  if (!httpSession) {
+    return null;
+  }
+
+  return createAPI(httpSession);
+}
+
+export async function createAPI(session: HttpSession) {
+  return {
+    user: new UserCRUD(session),
+    order: new OrderCRUD(session),
+    laptop: new LaptopCRUD(session),
+  };
+}
+
+export const logout = session.logout;
 
 /**
  * Types
  */
-export type { User, Laptop, Order };
+export type Api = ReturnType<typeof createAPI> extends Promise<infer R>
+  ? R
+  : never;
+
+export type { HttpSession, User, Order, Laptop };

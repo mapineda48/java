@@ -13,22 +13,22 @@ import "./index.scss";
 ReactDOM.render(
   <React.StrictMode>
     <Portals>
-      <Session>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<SignIn />} />
-            <Route path="/dashboard/*" element={<Dashboard />} />
-            <Route
-              path="*"
-              element={
-                <div style={{ padding: "1rem" }}>
-                  <p>There's nothing here!</p>
-                </div>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
-      </Session>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/*"
+            element={
+              <Session>
+                <Routes>
+                  <Route path="login" element={<SignIn />} />
+                  <Route path="dashboard/*" element={<Dashboard />} />
+                </Routes>
+              </Session>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </Portals>
   </React.StrictMode>,
   document.getElementById("root")

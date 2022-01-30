@@ -1,33 +1,17 @@
-import axios from "axios";
+import { CRUD } from "./crud";
+import type { Record as Base } from "./crud";
+import type { HttpSession } from "./session";
 
-export async function remove(id: number) {
-  await axios.delete(`/api/laptop/${id}`);
-}
-
-export async function fetchAll() {
-  const res = await axios.get("/api/laptop/all");
-
-  return res.data as Record[];
-}
-
-export async function insert(laptop: Laptop) {
-  const res = await axios.post("/api/laptop/new", { ...laptop, id: Date.now() });
-
-  return res.data as Record;
-}
-
-export async function update(laptop: Record) {
-  const res = await axios.put("/api/laptop/update", { ...laptop });
-
-  return res.data as Record;
+export default class LaptopCRUD extends CRUD<Record> {
+  constructor(session: HttpSession) {
+    super(session, "laptop");
+  }
 }
 
 /**
  * Types
  */
-export interface Record extends Laptop {
-  id: number;
-}
+export interface Record extends Laptop, Base {}
 
 export interface Laptop {
   brand: string;

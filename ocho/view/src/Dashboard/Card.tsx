@@ -1,19 +1,19 @@
 import React from "react";
 import createAsyncHook from "../createAsyncHook";
-import api from "../api";
 import { useAlert } from "../Alert";
 import { useModalLaptop, useModalUser } from "../Modal";
+import { useApi } from "../Session";
 
 import type { User as TUser, Laptop as TLaptop } from "../api";
-
-const useDeleteUser = createAsyncHook(api.user.remove, true);
-const useDeleteLatop = createAsyncHook(api.laptop.remove, true);
+import { usePromise } from "../createAsyncHook/usePromise";
 
 export function Laptop(props: {
   record: TLaptop.Record;
   onChange?: () => void;
 }) {
-  const [loading, , , remove] = useDeleteLatop();
+  const api = useApi();
+  const [loading, , , remove] = usePromise(true, api.laptop.remove);
+
   const alert = useAlert();
   const updateLatop = useModalLaptop();
 
@@ -74,17 +74,18 @@ export function Laptop(props: {
                 className="btn btn-sm btn-outline-secondary"
                 disabled={loading}
                 onClick={(e) => {
-                  remove(laptop.id)
-                    .then(() => {
-                      alert({
-                        message: laptop.model,
-                        title: "Eliminado",
-                        onHide: props.onChange,
-                      });
-                    })
-                    .catch((error) => {
+                  remove(laptop.id).then(({ error }) => {
+                    if (error) {
                       alert({ error });
+                      return;
+                    }
+
+                    alert({
+                      message: laptop.model,
+                      title: "Eliminado",
+                      onHide: props.onChange,
                     });
+                  });
                 }}
               >
                 Eliminar
@@ -107,7 +108,9 @@ export function Laptop(props: {
 }
 
 export function User(props: { record: TUser.Record; onChange?: () => void }) {
-  const [loading, , , remove] = useDeleteUser();
+  const api = useApi();
+  const [loading, , , remove] = usePromise(true, api.user.remove);
+
   const alert = useAlert();
   const updateUser = useModalUser();
 
@@ -154,17 +157,18 @@ export function User(props: { record: TUser.Record; onChange?: () => void }) {
                 disabled={loading}
                 onClick={(e) => {
                   console.log({ record: props.record });
-                  remove(props.record.id)
-                    .then(() => {
-                      alert({
-                        message: user.name,
-                        title: "Eliminado",
-                        onHide: props.onChange,
-                      });
-                    })
-                    .catch((error) => {
+                  remove(props.record.id).then(({ error }) => {
+                    if (error) {
                       alert({ error });
+                      return;
+                    }
+
+                    alert({
+                      message: user.name,
+                      title: "Eliminado",
+                      onHide: props.onChange,
                     });
+                  });
                 }}
               >
                 Eliminar

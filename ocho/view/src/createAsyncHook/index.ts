@@ -13,6 +13,16 @@ const useState = initAction({
   },
 });
 
+export function foo<
+  P
+>(
+  promise: P,
+  ...args: P extends (...args: infer A) => Promise<any> ? A : never[]
+): P extends (...args: infer A) => Promise<infer R> ? true : never;
+export function foo(...args: any[]): any {
+  return null;
+}
+
 export default function createHook<T, W extends boolean = false>(
   task: T,
   waitCall?: W

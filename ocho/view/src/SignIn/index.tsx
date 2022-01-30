@@ -1,23 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { useAlert } from "../Alert";
-import { useSignUp } from "../Modal";
-import { useSession } from "../Session";
+//import { useSignUp } from "../Modal";
+import { useSignIn } from "../Session";
 import { getDataForm, setLoading } from "../vanilla";
 import "./index.scss";
 
 export default function Login() {
-  const navigate = useNavigate();
-  const session = useSession();
+  const signin = useSignIn();
   const showAlert = useAlert();
-  const signup = useSignUp();
-
-  React.useEffect(() => {
-    if (session.user) navigate("/dashboard/");
-  }, [navigate, session.user]);
-
-  if (session.user) return null;
+  //const signup = useSignUp();
 
   return (
     <div className="sign-in">
@@ -33,11 +25,10 @@ export default function Login() {
           const ready = setLoading(form);
 
           try {
-            await session.signin(email, password);
+            await signin(email, password);
           } catch (error: any) {
             showAlert({
-              title: "Ups...",
-              message: error?.message || "unknown",
+              error,
             });
             ready();
           }
@@ -55,7 +46,6 @@ export default function Login() {
             name="email"
             required
             className="form-control"
-            
             aria-describedby="emailHelp"
           />
         </div>
@@ -68,7 +58,6 @@ export default function Login() {
             required
             className="form-control"
             name="password"
-            
           />
         </div>
         <div className="mb-3">
@@ -83,12 +72,11 @@ export default function Login() {
                   message:
                     "Esto no estaba en los requerimientos, pero lo hago para facilitar el testeo.",
                   onUnMount() {
-                    signup({});
+                    //signup({});
                   },
                 });
               }}
               href="#"
-              
             >
               Crea tu cuenta aquí
             </a>

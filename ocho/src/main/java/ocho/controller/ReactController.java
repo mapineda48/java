@@ -10,33 +10,45 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
-public class ReactController {
+public class ReactController extends Html {
+
     private String html;
 
     ReactController() {
-        html = Resources.readIndex(getClass().getClassLoader());
+        html = readIndex();
     }
 
-    @GetMapping({ "/dashboard/**" })
+    @GetMapping({
+            "/login",
+            "/dashboard/**"
+    })
     public String getIndex(final HttpServletRequest req) {
         return html;
     }
 
 }
 
-class Resources {
-    public static String readIndex(ClassLoader classLoader) {
+@Slf4j
+class Html {
+    public String readIndex() {
         try {
-            InputStream inputStream = classLoader.getResourceAsStream("static/index.html");
+            var loader = getClass().getClassLoader();
+
+            InputStream inputStream = loader.getResourceAsStream("static/index.html");
+
             return readFromInputStream(inputStream);
         } catch (Exception e) {
-            System.out.println(e);
-            return "fail read react index";
+
+            log.error("Fail load index.html", e);
+
+            return "fail load index";
         }
     }
 
-    public static String readFromInputStream(InputStream inputStream)
+    public String readFromInputStream(InputStream inputStream)
             throws IOException {
         StringBuilder resultStringBuilder = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {

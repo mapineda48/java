@@ -3,12 +3,12 @@ import { usePortalBody } from "../Portals";
 import useModal from "../useModal";
 import { useAlert } from "../Alert";
 import { getDataForm, setDataForm, setLoading } from "../vanilla";
-import api from "../api";
 import { Modal } from "bootstrap";
-
 import type { User, Laptop } from "../api";
+import { useApi } from "../Session";
 
 export function MLaptop(props: PLaptop) {
+  const api = useApi();
   const ref = useModal(props.onHide);
   const showAlert = useAlert();
 
@@ -253,131 +253,8 @@ export function useModalLaptop() {
   );
 }
 
-export function SignUp(props: Props) {
-  const ref = useModal(props.onHide);
-  const showAlert = useAlert();
-
-  return (
-    <div
-      ref={ref}
-      className="modal fade"
-      tabIndex={-1}
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Registrar Administrador</h5>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            />
-          </div>
-          <div className="modal-body">
-            <form
-              onSubmit={async (e) => {
-                e.preventDefault();
-
-                const form = e.currentTarget;
-
-                const modal = Modal.getInstance(ref.current as any) as Modal;
-
-                const user: User.User = getDataForm(form);
-
-                const ready = setLoading(form);
-
-                try {
-                  await api.user.insert(user);
-
-                  showAlert({
-                    title: "Administrador",
-                    message: "Agregado Correctamente",
-                    onHide() {
-                      modal.hide();
-                    },
-                  });
-                } catch (error: any) {
-                  showAlert({
-                    error,
-                  });
-                } finally {
-                  ready();
-                }
-              }}
-            >
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label">
-                  Correo
-                </label>
-                <input
-                  maxLength={80}
-                  type="email"
-                  name="email"
-                  required
-                  className="form-control"
-                  aria-describedby="emailHelp"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="password" className="form-label">
-                  Contraseña
-                </label>
-                <input
-                  maxLength={50}
-                  type="password"
-                  required
-                  className="form-control"
-                  name="password"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="name" className="form-label">
-                  Nombre
-                </label>
-                <input
-                  maxLength={50}
-                  type="text"
-                  required
-                  className="form-control"
-                  name="name"
-                />
-              </div>
-              <button type="submit" className="btn btn-primary">
-                Completar
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export function useSignUp() {
-  const append = usePortalBody();
-
-  return React.useCallback(
-    (opt: Props) => {
-      append(({ remove }) => {
-        return (
-          <SignUp
-            {...opt}
-            onHide={() => {
-              if (opt.onHide) opt.onHide();
-              remove();
-            }}
-          />
-        );
-      });
-    },
-    [append]
-  );
-}
-
 export function MUser(props: PUser) {
+  const api = useApi();
   const ref = useModal(props.onHide);
   const showAlert = useAlert();
 
@@ -580,10 +457,6 @@ export function useModalUser() {
 /**
  * Types
  */
-interface Props {
-  onHide?: () => void;
-}
-
 interface PLaptop {
   record?: Laptop.Record;
   onHide?: () => void;

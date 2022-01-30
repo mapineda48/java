@@ -3,48 +3,24 @@ package ocho.repository;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 import ocho.entity.Order;
 
-@Repository
-public class OrderRepository {
-    @Autowired
-    private OrderCrudRepository orderCrudRepository;
+public interface OrderRepository extends MongoRepository<Order, BigInteger> {
 
-    public List<Order> findByDateAndSalesMan(Date registerDay, Integer id){
-        return orderCrudRepository.findByDateAndSalesMan(registerDay, id);
-    };
+    @Query(value = "{ registerDay: ?0, 'salesMan._id': '?1' }")
+    public List<Order> findByDateAndSalesMan(Date registerDay, Integer id);
 
+    @Query(value = "{ status: ?0, 'salesMan._id': '?1' }")
+    public List<Order> findByStatusAndSalesMan(String status, Integer id);
 
-    public List<Order> findByStatusAndSalesMan(String status, Integer id) {
-        return orderCrudRepository.findByStatusAndSalesMan(status, id);
-    }
+    @Query(value = "{ 'salesMan._id': '?0' }")
+    public List<Order> findBySalesMan(Integer id);
 
-    public List<Order> findBySalesMan(Integer id) {
-        return orderCrudRepository.findBySalesMan(id);
-    }
+    @Query(value = "{ 'salesMan.zone': ?0 }")
+    public List<Order> findByZone(String zone);
 
-    public List<Order> findByZone(String zone) {
-        return orderCrudRepository.findByZone(zone);
-    }
-
-    public List<Order> findAll() {
-        return orderCrudRepository.findAll();
-    }
-
-    public Optional<Order> findById(BigInteger id) {
-        return orderCrudRepository.findById(id);
-    }
-
-    public Order save(Order order) {
-        return orderCrudRepository.save(order);
-    }
-
-    public void delete(Order order) {
-        orderCrudRepository.delete(order);
-    }
 }

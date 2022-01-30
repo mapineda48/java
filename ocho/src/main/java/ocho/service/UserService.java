@@ -16,6 +16,23 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public User login(String email, String password) {
+        var res = userRepository.login(email, password);
+
+        if (res.isPresent()) {
+            return res.get();
+        } else {
+            User user = new User();
+
+            // user.setPassword(password);
+            // user.setEmail(email);
+            // user.setName("NO DEFINIDO");
+
+            return user;
+        }
+
+    }
+
     public List<User> findByMonthDay(String monthDay) {
         return userRepository.findByMonthDay(monthDay);
     };
@@ -28,15 +45,17 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User login(String email, String password) {
-        return userRepository.login(email, password);
-    }
-
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     public User save(User user) {
+        var ms = System.currentTimeMillis();
+
+        var id = BigInteger.valueOf(ms);
+
+        user.setId(id);
+
         return userRepository.save(user);
     }
 
@@ -51,7 +70,7 @@ public class UserService {
             var password = user.getPassword();
             var address = user.getAddress();
             var identification = user.getIdentification();
-            var type = user.getType();
+            var role = user.getRole();
             var zone = user.getZone();
             var cellPhone = user.getCellPhone();
 
@@ -61,7 +80,7 @@ public class UserService {
             record.setAddress(address);
             record.setCellPhone(cellPhone);
             record.setIdentification(identification);
-            record.setType(type);
+            record.setRole(role);
             record.setZone(zone);
 
             userRepository.save(record);

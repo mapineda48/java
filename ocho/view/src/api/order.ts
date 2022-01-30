@@ -1,41 +1,25 @@
-import axios from "axios";
-import type { User, Laptop } from ".";
+import { CRUD } from "./crud";
+import type { Record as Base } from "./crud";
+import type { HttpSession } from "./session";
+import type { Record as User } from "./user";
+import type { Record as Laptop } from "./laptop";
 
-export async function remove(id: number) {
-  await axios.delete(`/api/order/${id}`);
-}
-
-export async function fetchAll() {
-  const res = await axios.get("/api/order/all");
-
-  return res.data as Record[];
-}
-
-export async function insert(order: Order) {
-  const res = await axios.post("/api/order/new", { ...order, id: Date.now() });
-
-  return res.data as Record;
-}
-
-export async function update(order: Record) {
-  const res = await axios.put("/api/order/update", { ...order });
-
-  return res.data as Record;
+export default class OrderCRUD extends CRUD<Record> {
+  constructor(session: HttpSession) {
+    super(session, "order");
+  }
 }
 
 /**
  * Types
  */
-export interface Record extends Order {
-  id: number;
-}
+export interface Record extends Order, Base {}
 
 export interface Order {
-  id: number;
   registerDay: string;
   status: string;
-  salesMan: User.Record;
-  products: Laptop.Record[];
+  salesMan: User;
+  products: Laptop[];
   quantities: {
     [K: string]: number;
   };
