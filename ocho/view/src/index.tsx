@@ -1,35 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Portals from "./Portals";
 import Home from "./Home";
-import Session from "./Session";
-import SignIn from "./SignIn";
-import Dashboard from "./Dashboard";
+import App from "./App/Lazy";
+import Shop from "./Shop/Lazy";
 import reportWebVitals from "./reportWebVitals";
 
 import "./index.scss";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Portals>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/*"
-            element={
-              <Session>
-                <Routes>
-                  <Route path="login" element={<SignIn />} />
-                  <Route path="dashboard/*" element={<Dashboard />} />
-                </Routes>
-              </Session>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    </Portals>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/*" element={<Home />} />
+        <Route path="app/*" element={<App />} />
+        <Route path="shop" element={<Shop />} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -22,8 +22,13 @@ public class ReactController extends Html {
     }
 
     @GetMapping({
-            "/login",
-            "/dashboard/**"
+            "/shop",
+            "/about",
+            "/app/login",
+            "/app/dashboard/",
+            "/app/dashboard/welcome",
+            "/app/dashboard/users",
+            "/app/dashboard/laptops"
     })
     public String getIndex(final HttpServletRequest req) {
         return html;

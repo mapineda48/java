@@ -1,6 +1,7 @@
 import React from "react";
 import { initAction } from "mp48-react/useState";
 import { useLocation, useNavigate } from "react-router-dom";
+import Loading from "../../Loading";
 import { useAlert } from "../Alert";
 import { validateSession, signin, logout } from "../api";
 import type { Api } from "../api";
@@ -11,6 +12,9 @@ const useState = initAction({
   },
   loading(state: State, isLoading = true): State {
     return { ...state, isLoading, complete: !isLoading };
+  },
+  init(state: State): State {
+    return init();
   },
 });
 
@@ -37,16 +41,13 @@ export function useApi() {
   return api as Api;
 }
 
-const PATH_LOGIN = "/login";
+const PATH_LOGIN = "/app/login";
+const PATH_DASHBOARD = "/app/dashboard/";
 /**
  * Functional Component
  */
 export function SessionContext(props: Props) {
-  const [state, , session] = useState({
-    complete: false,
-    isLoading: false,
-    api: null,
-  });
+  const [state, , session] = useState(init);
 
   const showAlert = useAlert();
 
@@ -77,7 +78,7 @@ export function SessionContext(props: Props) {
         session.api(api);
 
         if (inLogin) {
-          navigate("/dashboard/");
+          navigate(PATH_DASHBOARD);
         }
       })
       .catch((error) => {
@@ -93,12 +94,8 @@ export function SessionContext(props: Props) {
       .finally(() => session.loading(false));
   }, [inLogin, navigate, isCompleteValidate, session, showAlert]);
 
-  if (!isCompleteValidate) {
-    return null;
-  }
-
-  if (state.isLoading) {
-    return <div>Loading...</div>;
+  if (state.isLoading || !isCompleteValidate) {
+    return <Loading />;
   }
 
   if (inLogin) {
@@ -107,7 +104,7 @@ export function SessionContext(props: Props) {
         value={async (email, password) => {
           return signin(email, password).then((api) => {
             session.api(api);
-            navigate("/dashboard/");
+            navigate(PATH_DASHBOARD);
           });
         }}
       >
@@ -125,7 +122,7 @@ export function SessionContext(props: Props) {
       <Context.LogOut.Provider
         value={() => {
           logout();
-          session.api(null);
+          session.init();
           navigate(PATH_LOGIN);
         }}
       >
@@ -133,6 +130,14 @@ export function SessionContext(props: Props) {
       </Context.LogOut.Provider>
     </Context.Api.Provider>
   );
+}
+
+function init(): State {
+  return {
+    complete: false,
+    isLoading: false,
+    api: null,
+  };
 }
 
 export default SessionContext;
