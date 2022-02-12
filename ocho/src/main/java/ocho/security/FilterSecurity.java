@@ -46,7 +46,7 @@ public class FilterSecurity extends OncePerRequestFilter {
         var token = getJwtFromHeader(request);
 
         if (token == null) {
-            log.info("skip set role");
+            // log.info("skip set role");
 
             return;
         }
@@ -70,7 +70,7 @@ public class FilterSecurity extends OncePerRequestFilter {
         var headerAuth = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (headerAuth == null) {
-            log.info("missing header");
+            // log.info("missing header");
             return null;
         }
 

@@ -57,10 +57,10 @@ export function SessionContext(props: Props) {
 
   const inLogin = location.pathname === PATH_LOGIN;
 
-  const isCompleteValidate = !state.isLoading && state.complete;
+  const skipValidateSession = state.isLoading || state.complete;
 
   React.useEffect(() => {
-    if (isCompleteValidate) {
+    if (skipValidateSession) {
       return;
     }
 
@@ -92,9 +92,16 @@ export function SessionContext(props: Props) {
         });
       })
       .finally(() => session.loading(false));
-  }, [inLogin, navigate, isCompleteValidate, session, showAlert]);
+  }, [
+    inLogin,
+    navigate,
+    session,
+    showAlert,
+    state.isLoading,
+    skipValidateSession,
+  ]);
 
-  if (state.isLoading || !isCompleteValidate) {
+  if (!state.complete) {
     return <Loading />;
   }
 

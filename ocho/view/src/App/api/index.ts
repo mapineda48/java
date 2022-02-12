@@ -2,6 +2,7 @@ import UserCRUD from "./user";
 import OrderCRUD from "./order";
 import LaptopCRUD from "./laptop";
 import { session } from "./session";
+import { ensureThis } from "./util";
 
 import type { HttpSession } from "./session";
 import type * as User from "./user";
@@ -26,9 +27,9 @@ export async function validateSession() {
 
 export async function createAPI(session: HttpSession) {
   return {
-    user: new UserCRUD(session),
-    order: new OrderCRUD(session),
-    laptop: new LaptopCRUD(session),
+    user: ensureThis(new UserCRUD(session)),
+    order: ensureThis(new OrderCRUD(session)),
+    laptop: ensureThis(new LaptopCRUD(session)),
   };
 }
 

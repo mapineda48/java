@@ -1,11 +1,10 @@
 import React from "react";
-import createAsyncHook from "../createAsyncHook";
+import { usePromise } from "mp48-react/usePromise";
 import { useAlert } from "../Alert";
 import { useModalLaptop, useModalUser } from "../Modal";
 import { useApi } from "../Session";
 
 import type { User as TUser, Laptop as TLaptop } from "../api";
-import { usePromise } from "../createAsyncHook/usePromise";
 
 export function Laptop(props: {
   record: TLaptop.Record;
@@ -94,7 +93,11 @@ export function Laptop(props: {
                 type="button"
                 className="btn btn-sm btn-outline-secondary"
                 onClick={() => {
-                  updateLatop({ record: props.record, onHide: props.onChange });
+                  updateLatop({
+                    api,
+                    record: props.record,
+                    onHide: props.onChange,
+                  });
                 }}
               >
                 Editar
@@ -177,7 +180,11 @@ export function User(props: { record: TUser.Record; onChange?: () => void }) {
                 type="button"
                 className="btn btn-sm btn-outline-secondary"
                 onClick={() => {
-                  updateUser({ record: props.record, onHide: props.onChange });
+                  updateUser({
+                    api,
+                    record: props.record,
+                    onHide: props.onChange,
+                  });
                 }}
               >
                 Editar
