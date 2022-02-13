@@ -4,7 +4,7 @@ This project was carried out as the final activity of cycle 4 in training as a [
 
 # Usage
 
-- ## docker-compose
+## docker-compose
 
 Do not complicate configuring an environment to run the application, this demo has a [container](https://hub.docker.com/r/mapineda48/ocho) available in [dockerhub](https://hub.docker.com/), the only thing you should have installed on your pc is [docker-compose](https://docs.docker.com/compose/), create a directory, in this create a file called `docker-compose.yml` and add the following:
 
@@ -36,7 +36,7 @@ docker-compose up
 ```
 Wait a few minutes while the dependencies are downloaded, the services are configured and when you see that the services are ready go to the browser and go to http://localhost:3000
 
-- ## docker
+## docker
 
 If you prefer you can also use the container without docker-compose:
 
