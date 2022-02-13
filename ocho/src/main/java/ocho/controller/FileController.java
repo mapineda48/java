@@ -22,22 +22,14 @@ public class FileController {
 
     @PostMapping("/upload")
     public String uploadFile(@RequestPart MultipartFile file) {
-        try {
-            if (file == null) {
-                log.info("missing file");
-                return "missing file";
-            }
+        var url = minioService.uploadFile(file);
 
-            var url = minioService.uploadFile(file);
-
-            log.info("url {}", url);
-
+        if (url != null) {
             return url;
-        } catch (Exception e) {
-            log.error("Unhandler minio client: {}", e);
-
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error");
         }
+
+        throw new ResponseStatusException(
+                HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error");
+
     }
 }

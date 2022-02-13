@@ -65,30 +65,32 @@ public class MinioService extends ResourceUtil {
 
     log.info("setting policy bucket {}", myBucketName);
 
-    var json = loadResource("bucketPolicy.json");
-
-    var policyJson = String.format(json, myBucketName);
+    var policyJson = String.format(loadResource("bucketPolicy.json"), myBucketName);
 
     minioClient.setBucketPolicy(
         SetBucketPolicyArgs.builder().bucket(myBucketName).config(policyJson).build());
   }
 
-  public String uploadFile(MultipartFile file) throws IOException, InvalidKeyException, ErrorResponseException,
-      InsufficientDataException, InternalException, InvalidResponseException,
-      NoSuchAlgorithmException,
-      ServerException, XmlParserException, IllegalArgumentException {
+  public String uploadFile(MultipartFile file) {
 
     var uuid = UUID.randomUUID().toString();
     var size = file.getSize();
     var contentType = file.getContentType();
-    var inputStream = file.getInputStream();
 
-    minioClient.putObject(
-        PutObjectArgs.builder().bucket(myBucketName).object(uuid).stream(
-            inputStream, size, -1)
-            .contentType(contentType)
-            .build());
+    try {
+      var inputStream = file.getInputStream();
 
-    return publicUrl + uuid;
+      minioClient.putObject(
+          PutObjectArgs.builder().bucket(myBucketName).object(uuid).stream(
+              inputStream, size, -1)
+              .contentType(contentType)
+              .build());
+
+      return publicUrl + uuid;
+    } catch (Exception e) {
+      log.error("fail upload", e);
+
+      return null;
+    }
   }
 }
