@@ -12,18 +12,17 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
 import ocho.entity.User;
 
 @Component
 public class JwtSecurity {
-    @Value("${ocho.jwt.key}")
+    @Value("${app.jwt.key}")
     private String jwtSecret;
 
     private Long jwtExpToken;
     private Long jwtExpRefresh;
 
-    JwtSecurity(@Value("${ocho.jwt.exp.token}") int jwtExpToken, @Value("${ocho.jwt.exp.refresh}") int jwtExpRefresh){
+    JwtSecurity(@Value("${app.jwt.exp.token}") int jwtExpToken, @Value("${app.jwt.exp.refresh}") int jwtExpRefresh){
 
         // Parse Hours to milliseconds
         this.jwtExpToken = TimeUnit.HOURS.toMillis(jwtExpToken);

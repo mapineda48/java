@@ -1,0 +1,11 @@
+{
+    "Statement": [
+        {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Resource": "arn:aws:s3:::%1$s/*"
+        }
+    ],
+    "Version": "2012-10-17"
+}

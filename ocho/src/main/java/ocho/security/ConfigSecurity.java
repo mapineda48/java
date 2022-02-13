@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ConfigSecurity extends WebSecurityConfigurerAdapter {
     private static final String API_PATTERN = "/api/**";
-    private static final String[] PUBLIC_APIS = { "/api/demo/admin", "/api/auth/signin", "/api/auth/refresh" };
+    private static final String[] PUBLIC_APIS = { "/api/demo/admin", "/api/auth/signin", "/api/auth/refresh", "/api/file" };
 
     @Autowired
     SecurityService securityService;

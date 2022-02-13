@@ -13,7 +13,7 @@ import ocho.service.UserService;
 @RequestMapping("/api/demo")
 public class DemoController {
     
-    @Value("${ocho.email}")
+    @Value("${app.email}")
     private String email;
 
     @Autowired

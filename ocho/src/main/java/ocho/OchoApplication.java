@@ -19,7 +19,7 @@ public class OchoApplication {
 	}
 
 	@Bean
-	CommandLineRunner run(UserService userService, @Value("${ocho.email}") String email, @Value("${ocho.password}") String password) {
+	CommandLineRunner run(UserService userService, @Value("${app.email}") String email, @Value("${app.password}") String password) {
 		return args -> {
 			var res = userService.findByEmail(email);
 
