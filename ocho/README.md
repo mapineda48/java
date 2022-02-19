@@ -108,6 +108,8 @@ docker run \
 
 - [Intro to the Jackson ObjectMapper | Baeldung](https://www.baeldung.com/jackson-object-mapper-tutorial)
 
+- [How to Read a File in Java](https://www.baeldung.com/reading-file-in-java)
+
 # VSCode
 
 - [Lombok](https://projectlombok.org/setup/vscode)
