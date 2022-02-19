@@ -74,6 +74,8 @@ docker run \
 
 - [Spring Boot File upload example with Multipart File - BezKoder](https://www.bezkoder.com/spring-boot-file-upload/)
 
+- [Spring Boot y Spring Security Custom Login - Arquitectura Java](https://www.arquitecturajava.com/spring-boot-y-spring-security-custom-login/)
+
 ### Minio
 
 - [MinIO | The MinIO Quickstart Guide](https://docs.min.io/docs/minio-quickstart-guide.html)
@@ -103,6 +105,8 @@ docker run \
 - [Convertir HTML a PDF en JavaScript | Delft Stack](https://www.delftstack.com/es/howto/javascript/javascript-convert-html-to-pdf/#:~:text=Utilice%20la%20biblioteca%20jsPDF%20para%20convertir%20HTML%20a%20PDF,-En%20este%20m%C3%A9todo&text=Verifique%20el%20c%C3%B3digo%20a%20continuaci%C3%B3n.&text=Copy%20var%20source%20%3D%20window.,landscape'%20%7D\)%3B%20doc.)
 
 - [Word to HTML - Fácil de usar y conversiones instantáneas](https://wordtohtml.net/)
+
+- [Intro to the Jackson ObjectMapper | Baeldung](https://www.baeldung.com/jackson-object-mapper-tutorial)
 
 # License
 
