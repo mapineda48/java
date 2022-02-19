@@ -108,6 +108,10 @@ docker run \
 
 - [Intro to the Jackson ObjectMapper | Baeldung](https://www.baeldung.com/jackson-object-mapper-tutorial)
 
+# VSCode
+
+- [Lombok](https://projectlombok.org/setup/vscode)
+
 # License
 
 MIT
