@@ -102,6 +102,8 @@ docker run \
 
 - [Convertir HTML a PDF en JavaScript | Delft Stack](https://www.delftstack.com/es/howto/javascript/javascript-convert-html-to-pdf/#:~:text=Utilice%20la%20biblioteca%20jsPDF%20para%20convertir%20HTML%20a%20PDF,-En%20este%20m%C3%A9todo&text=Verifique%20el%20c%C3%B3digo%20a%20continuaci%C3%B3n.&text=Copy%20var%20source%20%3D%20window.,landscape'%20%7D\)%3B%20doc.)
 
+- [Word to HTML - Fácil de usar y conversiones instantáneas](https://wordtohtml.net/)
+
 # License
 
 MIT
