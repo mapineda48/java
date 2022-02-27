@@ -16,6 +16,11 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public List<User> findAllWhereNotEmail(String email){
+        return userRepository.findAllWhereNotEmail(email);
+    };
+
+
     public User login(String email, String password) {
         var res = userRepository.login(email, password);
 
@@ -73,6 +78,7 @@ public class UserService {
             var role = user.getRole();
             var zone = user.getZone();
             var cellPhone = user.getCellPhone();
+            var urlAvatar = user.getUrlAvatar();
 
             record.setName(name);
             record.setEmail(email);
@@ -82,6 +88,7 @@ public class UserService {
             record.setIdentification(identification);
             record.setRole(role);
             record.setZone(zone);
+            record.setUrlAvatar(urlAvatar);
 
             userRepository.save(record);
 

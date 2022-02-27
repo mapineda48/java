@@ -6,7 +6,7 @@ export class CRUD<T extends Record> {
   protected readonly apiNew: string;
   protected readonly apiUpdate: string;
 
-  constructor(private session: HttpSession, table: string) {
+  constructor(protected session: HttpSession, table: string) {
     this.apiBase = `/api/${table}/`;
     this.apiFecthAll = this.apiBase + "all";
     this.apiNew = this.apiBase + "new";

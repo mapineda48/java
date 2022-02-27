@@ -48,7 +48,8 @@ docker run \
     -d \
     mapineda48/ocho
 ```
-# Sources
+
+# External Docs
 
 ### SpringBoot
 
@@ -109,6 +110,8 @@ docker run \
 - [Intro to the Jackson ObjectMapper | Baeldung](https://www.baeldung.com/jackson-object-mapper-tutorial)
 
 - [How to Read a File in Java](https://www.baeldung.com/reading-file-in-java)
+
+- [Tipos MIME](https://developer.mozilla.org/es/docs/Web/HTTP/Basics_of_HTTP/MIME_types)
 
 # VSCode
 

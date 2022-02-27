@@ -14,9 +14,13 @@ export function getDataForm<T = any>(el: HTMLElement): T {
   const inputs = getElements(el, ["input", "select"]);
 
   const res: any = Object.fromEntries(
-    inputs.map(({ name, value, type }) => {
+    inputs.map(({ name, value, files, type }: any) => {
       if (type === "number") {
         return [name, parseFloat(value)];
+      }
+
+      if (type === "file") {
+        return [name, files];
       }
 
       if (value === "true") {

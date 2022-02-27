@@ -34,7 +34,9 @@ public class OchoApplication {
 			admin.setEmail(email);
 			admin.setPassword(password);
 			admin.setRole("ROLE_ADMIN");
-			
+			admin.setUrlAvatar("/admin.png");
+			admin.setName("SuperUsuario Sistema");
+
 			userService.save(admin);
 			
 			log.info("save admin: {}", admin);

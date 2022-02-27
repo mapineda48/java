@@ -1,5 +1,5 @@
 apt update
-apt install -y curl git
+apt install -y curl git vim
 curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
 apt-get install -y nodejs
 npm install -g yarn

@@ -21,3 +21,19 @@
   bottom: 1em;
   right: 1em;
 }
+
+.menu {
+  cursor: pointer;
+  
+  img {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+  }
+
+  span {
+    color: white;
+    padding: 0.3em;
+    font-weight: bold;
+  }
+}

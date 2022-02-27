@@ -13,6 +13,7 @@ import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
+import io.minio.RemoveObjectArgs;
 import io.minio.SetBucketPolicyArgs;
 import io.minio.errors.ErrorResponseException;
 import io.minio.errors.InsufficientDataException;
@@ -22,6 +23,10 @@ import io.minio.errors.ServerException;
 import io.minio.errors.XmlParserException;
 import lombok.extern.slf4j.Slf4j;
 import ocho.util.ResourceUtil;
+
+/**
+ * https://docs.min.io/docs/java-client-api-reference.html
+ */
 
 @Slf4j
 @Service
@@ -91,6 +96,21 @@ public class MinioService extends ResourceUtil {
       log.error("fail upload", e);
 
       return null;
+    }
+  }
+
+  public void removeFile(String url) {
+    if (url == null) {
+      return;
+    }
+
+    var objectname = url.replace(publicUrl, "");
+
+    try {
+      minioClient.removeObject(
+        RemoveObjectArgs.builder().bucket(myBucketName).object(objectname).build());
+    } catch (Exception e) {
+      log.error("can't remove file", e);      
     }
   }
 }
