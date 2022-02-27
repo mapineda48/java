@@ -79,63 +79,48 @@ docker run \
 ### SpringBoot
 
 - [Spring Boot and Spring Security with JWT including Access and Refresh Tokens 🔑](https://www.youtube.com/watch?v=VVn9OG9nfH0)
-
 - [Spring Boot, MongoDB: JWT Authentication with Spring Security](https://www.bezkoder.com/spring-boot-jwt-auth-mongodb/)
-
 - [Introducción a Spring Security](https://www.adictosaltrabajo.com/2020/05/21/introduccion-a-spring-security/)
-
 - [PathPattern](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/util/pattern/PathPattern.html)
-
 - [Expression-Based Access Control](https://docs.spring.io/spring-security/site/docs/3.0.x/reference/el-access.html)
-
 - [Retrieve User Information in Spring Security](https://www.baeldung.com/get-user-in-spring-security)
-
 - [Spring ResponseStatusException](https://www.baeldung.com/spring-response-status-exception)
-
 - [JWT Authentication Tutorial](https://www.svlada.com/jwt-token-authentication-with-spring-boot/)
-
 - [Springboot integra la versión completa de minio, con muchos pits](https://www.jianshu.com/p/403eaf7d401c)
-
 - [Multipart Request Handling in Spring](https://www.baeldung.com/sprint-boot-multipart-requests)
-
 - [Spring Boot File upload example with Multipart File - BezKoder](https://www.bezkoder.com/spring-boot-file-upload/)
-
 - [Spring Boot y Spring Security Custom Login - Arquitectura Java](https://www.arquitecturajava.com/spring-boot-y-spring-security-custom-login/)
+- [Using Spring @Value With Defaults](https://www.baeldung.com/spring-value-defaults)
+- [Guide to Spring @Autowired](https://www.baeldung.com/spring-autowire#:~:text=Starting%20with%20Spring%202.5%2C%20the,collaborating%20beans%20into%20our%20bean.)
 
 ### Minio
 
 - [MinIO | The MinIO Quickstart Guide](https://docs.min.io/docs/minio-quickstart-guide.html)
-
 - [MinIO | Upload files from browser using pre-signed URLs - Cookbook/Recipe](https://docs.min.io/docs/upload-files-from-browser-using-pre-signed-urls.html)
-
 - [MinIO | Learn more about MinIO's Docker Implementation](https://docs.min.io/docs/minio-docker-quickstart-guide.html)
-
 - [docker-compose.yml](https://raw.githubusercontent.com/minio/minio/master/docs/orchestration/docker-compose/docker-compose.yaml)
-
 - [Policy Management — MinIO Baremetal Documentation](https://docs.min.io/minio/baremetal/security/minio-identity-management/policy-based-access-control.html)
 
 ### Mongodb
 
 - [Introduction To Cloud Computing | MongoDB](https://www.mongodb.com/cloud-database/cloud-computing)
 
+### Amazon S3
+
+- [How To Get Amazon S3 Access Keys](https://objectivefs.com/howto/how-to-get-amazon-s3-keys)
+- [Methods for accessing a bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-bucket-intro.html)
+- [Amazon S3 Website vs REST API Endpoints](https://cloudconfusing.com/2017/12/24/amazon-s3-website-vs-rest-api-endpoint/)
+
 ### Other
 
 - [auth0/java-jwt](https://github.com/auth0/java-jwt)
-
 - [Java Program to Convert Milliseconds to Minutes and Seconds](https://www.programiz.com/java-programming/examples/milliseconds-minutes-seconds)
-
 - [Java String format() Method With Examples - GeeksforGeeks](https://www.geeksforgeeks.org/java-string-format-method-with-examples/)
-
 - [Spring Boot Actuator con Prometheus y Grafana - Refactorizando](https://refactorizando.com/spring-boot-actuator-prometheus-grafana/)
-
 - [Convertir HTML a PDF en JavaScript | Delft Stack](https://www.delftstack.com/es/howto/javascript/javascript-convert-html-to-pdf/#:~:text=Utilice%20la%20biblioteca%20jsPDF%20para%20convertir%20HTML%20a%20PDF,-En%20este%20m%C3%A9todo&text=Verifique%20el%20c%C3%B3digo%20a%20continuaci%C3%B3n.&text=Copy%20var%20source%20%3D%20window.,landscape'%20%7D\)%3B%20doc.)
-
 - [Word to HTML - Fácil de usar y conversiones instantáneas](https://wordtohtml.net/)
-
 - [Intro to the Jackson ObjectMapper | Baeldung](https://www.baeldung.com/jackson-object-mapper-tutorial)
-
 - [How to Read a File in Java](https://www.baeldung.com/reading-file-in-java)
-
 - [Tipos MIME](https://developer.mozilla.org/es/docs/Web/HTTP/Basics_of_HTTP/MIME_types)
 
 # VSCode
