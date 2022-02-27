@@ -1,7 +1,5 @@
 package ocho.controller;
 
-import java.util.HashMap;
-
 import com.auth0.jwt.exceptions.TokenExpiredException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import lombok.extern.slf4j.Slf4j;
 import ocho.entity.Credential;
 import ocho.security.JwtSecurity;
+import ocho.security.UserSignIn;
 import ocho.service.UserService;
 
 @Slf4j
@@ -32,7 +31,7 @@ public class AuthController {
     private UserService userService;
 
     @PostMapping("/signin")
-    public HashMap<String, String> login(@RequestBody Credential credential) {
+    public UserSignIn login(@RequestBody Credential credential) {
         var user = userService.login(credential.getEmail(), credential.getPassword());
 
         var res = jwtSecurity.signin(user);

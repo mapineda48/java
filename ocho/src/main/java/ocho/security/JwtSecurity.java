@@ -1,7 +1,6 @@
 package ocho.security;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import com.auth0.jwt.JWT;
@@ -29,24 +28,21 @@ public class JwtSecurity {
         this.jwtExpRefresh = TimeUnit.HOURS.toMillis(jwtExpRefresh);
     }
 
-    public HashMap<String, String> signin(User user) {
+    public UserSignIn signin(User user) {
         var email = user.getEmail();
 
         if (email == null) {
             return null;
         }
 
-        String acces_token = createAccessToken(email);
+        var accessToken = createAccessToken(email);
+        var refreshToken = createRefreshToken(email);
+        
+        var userSignIn = new UserSignIn();
+        userSignIn.setAccessToken(accessToken);
+        userSignIn.setRefreshToken(refreshToken);
 
-        String refresh_token = createRefreshToken(email);
-
-        var tokens = new HashMap<String, String>();
-
-        tokens.put("accessToken", acces_token);
-
-        tokens.put("refreshToken", refresh_token);
-
-        return tokens;
+        return userSignIn;
     }
 
     private String createToken(String payload, Long ms) {

@@ -54,7 +54,7 @@ task installView(type: Exec) {
 task buildView(type: Exec) {
   workingDir './view'
 
-  // environment GENERATE_SOURCEMAP: 'false'
+  environment GENERATE_SOURCEMAP: 'false'
 
   commandLine 'yarn', 'build'
 

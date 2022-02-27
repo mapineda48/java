@@ -14,20 +14,37 @@ services:
   web:
     image: "mapineda48/ocho"
     environment:
-      MONGO_URI: "mongodb://app:example@db:27017/ocho?authSource=admin"
-    volumes:
-      - "$PWD:/home/app"
+      APP_MONGO: "mongodb://app:example@db:27017/ocho?authSource=admin"
+      APP_EMAIL: "admin@mapineda48.com"
+      APP_PASSWORD: "12345"
+      APP_JWT_KEY: "myCoolSecretKey"
+      APP_JWT_EXP_TOKEN: 2
+      APP_JWT_EXP_REFRESH: 8
+      APP_S3_USER: "minio"
+      APP_S3_PASSWORD: "minio123"
+      APP_S3_ENDPOINT: "http://localhost:9000"
+      APP_S3_DOCKER: "http://s3:9000"
     ports:
       - "3000:8080"
     depends_on:
       - db
+      - s3
   db:
     image: mongo:4.4.11-rc0-focal
     environment:
       MONGO_INITDB_ROOT_USERNAME: app
       MONGO_INITDB_ROOT_PASSWORD: example
       MONGO_INITDB_DATABASE: ocho
-
+  s3:
+    image: minio/minio:RELEASE.2022-02-07T08-17-33Z
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: "minio"
+      MINIO_ROOT_PASSWORD: "minio123"
+      MINIO_SERVER_URL: "http://localhost:9000"
+    command: server --console-address ":9001" /data
 ```
 now open a terminal and navigate to the directory where you created the file and run:
 
@@ -42,13 +59,22 @@ If you prefer you can also use the container without docker-compose:
 
 ```sh
 docker run \
-    --name demo \
+    --name ocho \
     -p 3000:8080 \
-    -e "MONGO_URI=<here your uri connectio to mongodb>" \
+    -e "APP_MONGO=<here your uri connection to mongodb>" \
+    -e "APP_EMAIL=admin@ocho" \
+    -e "APP_PASSWORD=12345" \
+    -e "APP_JWT_KEY=myCoolSecretKey" \
+    -e "APP_JWT_EXP_TOKEN=2" \
+    -e "APP_JWT_EXP_REFRESH=8" \
+    -e "APP_S3_USER=<amanzon s3 user>" \
+    -e "APP_S3_PASSWORD=<amanzon s3 password>" \
+    -e "APP_S3_ENDPOINT=<amanzon s3 endpoint>" \
     -d \
     mapineda48/ocho
 ```
-# Sources
+
+# External Docs
 
 ### SpringBoot
 
@@ -109,6 +135,8 @@ docker run \
 - [Intro to the Jackson ObjectMapper | Baeldung](https://www.baeldung.com/jackson-object-mapper-tutorial)
 
 - [How to Read a File in Java](https://www.baeldung.com/reading-file-in-java)
+
+- [Tipos MIME](https://developer.mozilla.org/es/docs/Web/HTTP/Basics_of_HTTP/MIME_types)
 
 # VSCode
 

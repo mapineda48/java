@@ -2,7 +2,7 @@ import UserCRUD from "./user";
 import OrderCRUD from "./order";
 import LaptopCRUD from "./laptop";
 import { session } from "./session";
-import { ensureThis } from "./util";
+import { ensureThis } from "./util/ensureThis";
 
 import type { HttpSession } from "./session";
 import type * as User from "./user";

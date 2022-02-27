@@ -71,9 +71,11 @@ export const session = {
 };
 
 export class HttpSession {
-  private api: AxiosInstance;
+  public api: AxiosInstance;
 
-  constructor(private auth: Auth, private baseURL = BASE_URL) {
+  constructor(private auth: Auth) {
+    console.log(auth);
+
     this.api = this.createInstance(auth.accessToken);
   }
 

@@ -3,6 +3,7 @@ import { usePromise } from "mp48-react/usePromise";
 import { useAlert } from "../Alert";
 import { useModalLaptop, useModalUser } from "../Modal";
 import { useApi } from "../Session";
+import Avatar from "../Modal/Avatar";
 
 import type { User as TUser, Laptop as TLaptop } from "../api";
 
@@ -123,6 +124,7 @@ export function User(props: { record: TUser.Record; onChange?: () => void }) {
     <div className="col">
       <div className="card shadow-sm">
         <div className="card-body">
+          <Avatar readonly src={user.urlAvatar} />
           <p className="card-text">
             <strong>Identificacion: </strong>
             {user.identification}

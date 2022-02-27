@@ -3,7 +3,8 @@ package ocho.entity;
 import java.math.BigInteger;
 import java.util.Date;
 
-import javax.validation.constraints.Email;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -41,4 +42,6 @@ public class User {
     private String address;
 
     private String cellPhone;
+
+    private String urlAvatar;
 }

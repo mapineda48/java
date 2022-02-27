@@ -5,8 +5,10 @@ import Card from "./Card";
 import { useApi, useLogout } from "../Session";
 import { useAlert } from "../Alert";
 import { usePromise } from "mp48-react/usePromise";
-import style from "./index.module.scss";
 import { useModalUser, useModalLaptop } from "../Modal";
+import { ensureAction } from "mp48-react/useState";
+import { UserDashboard } from "../api/user";
+import style from "./index.module.scss";
 
 export function Laptops() {
   const api = useApi();
@@ -85,7 +87,7 @@ export function Message(props: { children?: string; error?: any }) {
 
   return (
     <div className={style.message}>
-      {props.children || props?.error?.message || "Unknown"}
+      {props.children || props?.error?.message || "Unknown Message"}
     </div>
   );
 }
@@ -158,9 +160,54 @@ export function CreateRecord() {
   );
 }
 
+const useDashboard = ensureAction({
+  setData(state: State, data: UserDashboard): State {
+    return { ...state, isLoading: false, data: { ...data }, error: null };
+  },
+  loading(state: State, isLoading = true): State {
+    return { ...state, isLoading };
+  },
+  error(state: State, error: any): State {
+    return { ...state, isLoading: false, error, data: null };
+  },
+});
+
 export default function Navigation() {
   const showAlert = useAlert();
   const logout = useLogout();
+  const api = useApi();
+  const [state, , dashboard] = useDashboard({
+    isLoading: false,
+    data: null,
+    error: null,
+  });
+
+  const isReady = state.data || state.error;
+
+  React.useEffect(() => {
+    if (state.isLoading || isReady) return;
+
+    dashboard.loading();
+
+    api.user
+      .getUserDashboardData()
+      .then((data) => {
+        console.log(data);
+        dashboard.setData(data);
+      })
+      .catch((error) => {
+        console.log(error);
+        dashboard.error(error);
+      });
+  }, [state.isLoading, isReady, dashboard, api.user]);
+
+  if (!isReady) {
+    return <Loading />;
+  }
+
+  if (state.error) {
+    return <Message error={state.error} />;
+  }
 
   return (
     <div>
@@ -238,7 +285,43 @@ export default function Navigation() {
                   </form>
                 </li>
               </ul>
-              <button onClick={logout} className={style.logout} title="Salir">
+              <div
+                className={style.menu + " dropdown"}
+              >
+                <span
+                  className="dropdown-toggle"
+                  id="menuDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  title={state.data?.fullName}
+                >
+                  {state.data?.fullName?.split(" ")[0].substring(0, 10) ||
+                    "Unknown"}
+                </span>
+                <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="menuDropdown">
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      Editar perfil
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      Cambiar contraseña
+                    </a>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li onClick={logout}>
+                    <a className="dropdown-item" href="#">
+                      Salir
+                    </a>
+                  </li>
+                </ul>
+                <img src={state.data?.urlAvatar} alt="Av" />
+              </div>
+              {/* <button onClick={logout} className={style.logout} title="Salir">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width={20}
@@ -256,7 +339,7 @@ export default function Navigation() {
                     d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
                   />
                 </svg>
-              </button>
+              </button> */}
             </div>
           </div>
         </nav>
@@ -270,9 +353,18 @@ export default function Navigation() {
         </Routes>
       </main>
       <Routes>
-          <Route path="users" element={<CreateRecord />} />
-          <Route path="laptops" element={<CreateRecord />} />
-        </Routes>
+        <Route path="users" element={<CreateRecord />} />
+        <Route path="laptops" element={<CreateRecord />} />
+      </Routes>
     </div>
   );
+}
+
+/**
+ * Types
+ */
+export interface State {
+  error: any;
+  isLoading: boolean;
+  data: UserDashboard | null;
 }

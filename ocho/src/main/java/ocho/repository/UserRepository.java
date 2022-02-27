@@ -10,6 +10,9 @@ import org.springframework.data.mongodb.repository.Query;
 import ocho.entity.User;
 
 public interface UserRepository extends MongoRepository<User, BigInteger> {
+    @Query(value = "{ email: { $ne: ?0 } }")
+    public List<User> findAllWhereNotEmail(String email);
+
     @Query(value = "{ username: ?0 }")
     public Optional<User> findByUserName(String username);
 

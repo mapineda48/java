@@ -1,4 +1,5 @@
 import React from "react";
+import Avatar from "./Avatar";
 import { usePortalBody } from "../Portals";
 import useModal from "../useModal";
 import { useAlert } from "../Alert";
@@ -44,7 +45,7 @@ export function User({ api, onHide, record }: Props) {
 
                 const modal = Modal.getInstance(ref.current as any) as Modal;
 
-                const user: Type.User = getDataForm(form);
+                const user: Type.UserForm = getDataForm(form);
 
                 const ready = setLoading(form);
 
@@ -52,9 +53,9 @@ export function User({ api, onHide, record }: Props) {
                   let message = "Agregado";
 
                   if (!record) {
-                    await api.user.insert(user);
+                    await api.user.insertForm(user);
                   } else {
-                    await api.user.update({ ...record, ...user });
+                    await api.user.updateForm({ ...record, ...user });
                     message = "Actualizado";
                   }
 
@@ -74,6 +75,9 @@ export function User({ api, onHide, record }: Props) {
                 }
               }}
             >
+              <div className="mb-3">
+                <Avatar src={record?.urlAvatar} />
+              </div>
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">
                   Correo
