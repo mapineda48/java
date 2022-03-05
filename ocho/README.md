@@ -55,7 +55,7 @@ Wait a few minutes while the dependencies are downloaded, the services are confi
 
 ## docker
 
-If you prefer you can also use the container without docker-compose:
+The most similar to a production would be to try with **mongo atlas** and **amazon s3**, for this I can simply use the following command, wait for the service to load, enter http://localhost:3000, the App login credentials are **admin@ocho** and password **12345**:
 
 ```sh
 docker run \
@@ -110,6 +110,14 @@ docker run \
 - [How To Get Amazon S3 Access Keys](https://objectivefs.com/howto/how-to-get-amazon-s3-keys)
 - [Methods for accessing a bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-bucket-intro.html)
 - [Amazon S3 Website vs REST API Endpoints](https://cloudconfusing.com/2017/12/24/amazon-s3-website-vs-rest-api-endpoint/)
+
+### Gradle Scrips
+
+- [Build Script Basics](https://docs.gradle.org/current/userguide/tutorial_using_tasks.html#sec:task_dependencies)
+
+- [DSL Reference Home](https://docs.gradle.org/current/dsl/index.html)
+
+- [Execute task.dependsOn only on a Condition](https://stackoverflow.com/questions/52667846/execute-task-dependson-only-on-a-condition-in-gradle)
 
 ### Other
 
