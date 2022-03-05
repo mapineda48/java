@@ -4,9 +4,10 @@ WORKDIR /home/builder
 
 COPY . .
 
-RUN bash ./install.sh; \
-    ./gradlew dist
+ENV GENERATE_SOURCEMAP 'false'
+ENV APP_ENV 'production'
 
+RUN bash ./install.sh && ./gradlew build
 
 # https://pkgs.alpinelinux.org/package/edge/community/x86_64/openjdk11
 FROM alpine:3.15.0

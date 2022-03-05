@@ -35,9 +35,12 @@ test {
 	useJUnitPlatform()
 }
 
-task delBuildView(type: Delete) {
-    delete "src/main/resources/static"
-}
+/*
+ * Project Task
+ */
+
+
+def isProduction = System.getenv("APP_ENV") == 'production'
 
 task installView(type: Exec) {
   workingDir './view'
@@ -52,9 +55,9 @@ task installView(type: Exec) {
 }
 
 task buildView(type: Exec) {
+  dependsOn('installView')
+  
   workingDir './view'
-
-  environment GENERATE_SOURCEMAP: 'false'
 
   commandLine 'yarn', 'build'
 
@@ -65,15 +68,19 @@ task buildView(type: Exec) {
   }
 }
 
-task copyBuildView(type: Copy){
+task cleanViewProd(type: Delete) {
+    delete "src/main/resources/static"
+}
+
+task buildViewProd(type: Copy){
+	dependsOn('cleanViewProd','buildView')
+	
 	from 'view/build'
 	into 'src/main/resources/static'
 }
 
-task cleanBuildView(type: GradleBuild){
-	tasks = ['installView','buildView', 'delBuildView', 'copyBuildView']
-}
-
-task dist(type: GradleBuild){
-	tasks = ['cleanBuildView', 'build']
-}
+tasks.named('processResources') { 
+	if(isProduction){
+		dependsOn('buildViewProd')
+	}
+ }
