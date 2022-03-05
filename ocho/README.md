@@ -114,9 +114,7 @@ docker run \
 ### Gradle Scrips
 
 - [Build Script Basics](https://docs.gradle.org/current/userguide/tutorial_using_tasks.html#sec:task_dependencies)
-
 - [DSL Reference Home](https://docs.gradle.org/current/dsl/index.html)
-
 - [Execute task.dependsOn only on a Condition](https://stackoverflow.com/questions/52667846/execute-task-dependson-only-on-a-condition-in-gradle)
 
 ### Other
